@@ -7,3 +7,9 @@
    * Learning policy network with MSE Loss
    * Written in Pytorch 1.2
    
+   
+#### 7. Continuous A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/continuous_A3C.py)
+   * Continuous Asynchronized Actor Critic
+
+#### 8. Continuous A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/discrete_A3C.py)
+   * Discrete Asynchronized Actor Critic
