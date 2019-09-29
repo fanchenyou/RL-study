@@ -2,6 +2,10 @@
 This tutorial is from https://github.com/awjuliani/DeepRL-Agents/blob/master/Contextual-Policy.ipynb
 The original Tensorflow implementation is replaced with Pytorch
 Related article is https://medium.com/@awjuliani/super-simple-reinforcement-learning-tutorial-part-1-fd544fab149
+
+This code shows
+    1. train a simple neural network in order to learn a policy for picking actions using feedback from the environment.
+    2. use policy gradients to adjust NN's weights through gradient descent.
 '''
 
 import gym
