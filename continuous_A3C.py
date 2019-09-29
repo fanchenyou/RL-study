@@ -3,6 +3,9 @@ Reinforcement Learning (A3C) using Pytroch + multiprocessing.
 The most simple implementation for continuous action.
 
 Original source https://github.com/MorvanZhou/pytorch-A3C
+
+Pendulum problem: https://gym.openai.com/envs/Pendulum-v0/
+
 """
 
 import torch

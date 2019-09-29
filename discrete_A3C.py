@@ -2,7 +2,10 @@
 Reinforcement Learning (A3C) using Pytroch + multiprocessing.
 The most simple implementation for continuous action.
 
-https://github.com/MorvanZhou/pytorch-A3C"""
+Original source https://github.com/MorvanZhou/pytorch-A3C
+
+Cartpole problem: https://gym.openai.com/envs/CartPole-v0/
+"""
 
 import torch
 import torch.nn as nn
@@ -12,6 +15,7 @@ import torch.multiprocessing as mp
 from utils.shared_adam import SharedAdam
 import gym
 import os
+
 os.environ["OMP_NUM_THREADS"] = "1"
 
 UPDATE_GLOBAL_ITER = 10
@@ -54,7 +58,7 @@ class Net(nn.Module):
         logits, values = self.forward(s)
         td = v_t - values
         c_loss = td.pow(2)
-        
+
         probs = F.softmax(logits, dim=1)
         m = self.distribution(probs)
         exp_v = m.log_prob(a) * td.detach().squeeze()
@@ -69,7 +73,7 @@ class Worker(mp.Process):
         self.name = 'w%i' % name
         self.g_ep, self.g_ep_r, self.res_queue = global_ep, global_ep_r, res_queue
         self.gnet, self.opt = gnet, opt
-        self.lnet = Net(N_S, N_A)           # local network
+        self.lnet = Net(N_S, N_A)  # local network
         self.env = gym.make('CartPole-v0').unwrapped
 
     def run(self):
@@ -103,15 +107,17 @@ class Worker(mp.Process):
 
 
 if __name__ == "__main__":
-    gnet = Net(N_S, N_A)        # global network
-    gnet.share_memory()         # share the global parameters in multiprocessing
-    opt = SharedAdam(gnet.parameters(), lr=0.0001)      # global optimizer
+    gnet = Net(N_S, N_A)  # global network
+    gnet.share_memory()  # share the global parameters in multiprocessing
+    opt = SharedAdam(gnet.parameters(), lr=0.0001)  # global optimizer
     global_ep, global_ep_r, res_queue = mp.Value('i', 0), mp.Value('d', 0.), mp.Queue()
+
+    print("Use %d processes for all cores" % (mp.cpu_count(),))
 
     # parallel training
     workers = [Worker(gnet, opt, global_ep, global_ep_r, res_queue, i) for i in range(mp.cpu_count())]
     [w.start() for w in workers]
-    res = []                    # record episode reward to plot
+    res = []  # record episode reward to plot
     while True:
         r = res_queue.get()
         if r is not None:
@@ -121,6 +127,7 @@ if __name__ == "__main__":
     [w.join() for w in workers]
 
     import matplotlib.pyplot as plt
+
     plt.plot(res)
     plt.ylabel('Moving average ep reward')
     plt.xlabel('Step')
