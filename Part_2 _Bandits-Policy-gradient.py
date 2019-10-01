@@ -64,27 +64,29 @@ class QNet(nn.Module):
 
     def forward(self, state_in):
         state_in_one_hot = F.one_hot(state_in, num_classes=self.s_size)  # which bandit machine, encode in one-hot
+        # print state_in_one_hot
+        state_in_one_hot = state_in_one_hot.float()
         out = self.fc1(state_in_one_hot)
         # out = torch.sigmoid(out)
         out = out.view(-1)  # batch size is 1
-        print(out.size())
-        _, argmax = out.max(0)
-        print(argmax)
+        # print(out.size())
+        _, action = out.max(0)
+        # print(argmax)
         # print(out, argmax)
         # print(self.W.weight.data-self.data1)
-        return out, argmax
+        return out, action
 
 
 class BanditLoss(nn.Module):
     # score is K, chose_action is scalar (1 out of K), rewards is scalar
-    def forward(self, score, chosen_action, rewards):
-        return - (F.logsigmoid(score[chosen_action]) * rewards)
+    def forward(self, score, rewards):
+        return - (F.logsigmoid(score) * rewards)
 
 
 cBandit = ContextualBandit()
 s_size = cBandit.num_bandits
 a_size = cBandit.num_actions
-print(s_size, a_size)
+# print(s_size, a_size)
 
 criterion = BanditLoss()
 myAgent = QNet(s_size, a_size)
@@ -94,24 +96,35 @@ total_episodes = 10000  # Set total number of episodes to train agent on.
 total_reward = np.zeros([cBandit.num_bandits, cBandit.num_actions])  # Set scoreboard for bandits to 0.
 e = 0.1  # Set the chance of taking a random action.
 
-exit()
-
-
 i = 0
 while i < total_episodes:
     s = cBandit.getBandit()  # Get a state from the environment.
 
-    # Choose either a random action or one from our network.
-    if np.random.rand(1) < e:
-        action = np.random.randint(cBandit.num_actions)
-    else:
-        action = sess.run(myAgent.chosen_action, feed_dict={myAgent.state_in: [s]})
-
-    reward = cBandit.pullArm(action)  # Get our reward for taking an action given a bandit.
+    with torch.no_grad():
+        # Choose either a random action or one from our network.
+        if np.random.rand(1) < e:
+            action = np.random.randint(cBandit.num_actions)
+        else:
+            # action = sess.run(myAgent.chosen_action, feed_dict={myAgent.state_in: [s]})
+            state_in = torch.tensor([[s]]).long()
+            # print state_in
+            _, action = myAgent(state_in)
+            action = action.item()
+        # print action
 
     # Update the network.
-    feed_dict = {myAgent.reward_holder: [reward], myAgent.action_holder: [action], myAgent.state_in: [s]}
-    _, ww = sess.run([myAgent.update, weights], feed_dict=feed_dict)
+    reward = cBandit.pullArm(action)  # Get our reward for taking an action given a bandit.
+    reward_t = torch.tensor([reward]).float()
+
+    # feed_dict = {myAgent.reward_holder: [reward], myAgent.action_holder: [action], myAgent.state_in: [s]}
+    # _, ww = sess.run([myAgent.update, weights], feed_dict=feed_dict)
+    state_in = torch.tensor([[s]]).long()
+    out, _ = myAgent(state_in)
+
+    loss = criterion(out[action], reward_t)
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
 
     # Update our running tally of scores.
     total_reward[s, action] += reward
@@ -120,8 +133,7 @@ while i < total_episodes:
             np.mean(total_reward, axis=1)))
     i += 1
 
-
-
+ww = myAgent.fc1.weight.data
 for a in range(cBandit.num_bandits):
     print("The agent thinks action " + str(np.argmax(ww[a]) + 1) + " for bandit " + str(
         a + 1) + " is the most promising....")
