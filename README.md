@@ -13,7 +13,7 @@
     * Use policy gradients to adjust NN's weights through gradient descent
     * Re-written in Pytorch 1.2
 
-#### 3. Modeling environment, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Contextual-Policy.ipynb)
+#### 3. Modeling environment, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Model-Network.ipynb), [tutorial](https://medium.com/@awjuliani/simple-reinforcement-learning-with-tensorflow-part-3-model-based-rl-9a6fe0cce99)
     * Add separate network to model physical environment
     * Use policy gradients to adjust NN's weights through gradient descent
     * Re-written in Pytorch 1.2
