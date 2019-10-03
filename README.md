@@ -12,7 +12,12 @@
     * Train a neural network to learn a policy for picking actions using feedback from the environment
     * Use policy gradients to adjust NN's weights through gradient descent
     * Re-written in Pytorch 1.2
-   
+
+#### 3. Modeling environment, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Contextual-Policy.ipynb)
+    * Add separate network to model physical environment
+    * Use policy gradients to adjust NN's weights through gradient descent
+    * Re-written in Pytorch 1.2
+    
 #### 6. DQN, [ref](https://github.com/MorvanZhou/PyTorch-Tutorial/blob/master/tutorial-contents/405_DQN_Reinforcement_learning.py)
     * Deep Q Network
    
