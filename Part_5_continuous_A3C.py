@@ -126,6 +126,8 @@ if __name__ == "__main__":
     opt = SharedAdam(gnet.parameters(), lr=0.0002)  # global optimizer
     global_ep, global_ep_r, res_queue = mp.Value('i', 0), mp.Value('d', 0.), mp.Queue()
 
+    print("CPU Number to use %d" % (mp.cpu_count(),))
+    
     # parallel training
     workers = [Worker(gnet, opt, global_ep, global_ep_r, res_queue, i) for i in range(mp.cpu_count())]
     [w.start() for w in workers]
