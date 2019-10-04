@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 Reinforcement Learning (A3C) using Pytroch + multiprocessing.
 A simple implementation for continuous action learning.
@@ -23,7 +24,8 @@ import torch.multiprocessing as mp
 from utils.shared_adam import SharedAdam
 import gym
 import math, os
-os.environ["OMP_NUM_THREADS"] = "1"
+import matplotlib.pyplot as plt
+os.environ["OMP_NUM_THREADS"] = "3"
 
 UPDATE_GLOBAL_ITER = 5
 GAMMA = 0.9
@@ -49,7 +51,7 @@ class Net(nn.Module):
         self.distribution = torch.distributions.Normal
 
     def forward(self, x):
-        a1 = F.relu6(self.a1(x))
+        a1 = F.relu6(self.a1(x))  # ReLU6(x)=min(max(0,x),6)
         mu = 2 * F.tanh(self.mu(a1))
         sigma = F.softplus(self.sigma(a1)) + 0.001      # avoid 0
         c1 = F.relu6(self.c1(x))
@@ -66,13 +68,13 @@ class Net(nn.Module):
         self.train()
         mu, sigma, values = self.forward(s)
         td = v_t - values
-        c_loss = td.pow(2)
+        c_loss = td.pow(2) # critic loss is L2 loss:  L = Σ(R - V(s))²
 
         m = self.distribution(mu, sigma)
         log_prob = m.log_prob(a)
         entropy = 0.5 + 0.5 * math.log(2 * math.pi) + torch.log(m.scale)  # exploration
         exp_v = log_prob * td.detach() + 0.005 * entropy
-        a_loss = -exp_v
+        a_loss = -exp_v   # actor loss is policy loss: L = -log(π(s)) * A(s) - β*H(π)
         total_loss = (a_loss + c_loss).mean()
         return total_loss
 
@@ -136,7 +138,7 @@ if __name__ == "__main__":
             break
     [w.join() for w in workers]
 
-    import matplotlib.pyplot as plt
+    
     plt.plot(res)
     plt.ylabel('Moving average ep reward')
     plt.xlabel('Step')
