@@ -24,8 +24,8 @@
     * Use replay memory to sample from so that the training process is stable
     * Use epsilon-greedy to sample actions from predicted distribution
    
-#### 7. Continuous A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/continuous_A3C.py)
+#### 5. Continuous A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/continuous_A3C.py)
     * Continuous Asynchronized Actor Critic
 
-#### 8. Continuous A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/discrete_A3C.py)
+#### 6. Discrete A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/discrete_A3C.py)
     * Discrete Asynchronized Actor Critic
