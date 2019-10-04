@@ -18,7 +18,7 @@
     * Use policy gradients to adjust NN's weights through gradient descent
     * Re-written in Pytorch 1.2
     
-#### 6. DQN, [ref](https://github.com/MorvanZhou/PyTorch-Tutorial/blob/master/tutorial-contents/405_DQN_Reinforcement_learning.py)
+#### 4. DQN, [ref](https://github.com/MorvanZhou/PyTorch-Tutorial/blob/master/tutorial-contents/405_DQN_Reinforcement_learning.py)
     * Deep Q Network
    
 #### 7. Continuous A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/continuous_A3C.py)
