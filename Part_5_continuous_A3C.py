@@ -1,10 +1,17 @@
 """
 Reinforcement Learning (A3C) using Pytroch + multiprocessing.
-The most simple implementation for continuous action.
+A simple implementation for continuous action learning.
 
 Original source https://github.com/MorvanZhou/pytorch-A3C
 
-Pendulum problem: https://gym.openai.com/envs/Pendulum-v0/
+Pendulum problem: https://gym.openai.com/envs/Pendulum-v0/, https://github.com/openai/gym/wiki/Pendulum-v0
+
+This code shows
+    1. train a neural network in order to learn a policy for picking actions using feedback from the environment.
+    2. train a separate neural network to learn the environment.
+    3. use policy gradients to adjust NN's weights through gradient descent.
+    4. alternate training policy and env network
+    5. buffer gradients of policy network
 
 """
 
