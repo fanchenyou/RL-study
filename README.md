@@ -20,6 +20,9 @@
     
 #### 4. DQN, [ref](https://github.com/MorvanZhou/PyTorch-Tutorial/blob/master/tutorial-contents/405_DQN_Reinforcement_learning.py)
     * Deep Q Network
+    * use separate networks for 1) updating weights and 2) generate current decisions
+    * use replay memory to sample from so that the training process is stable
+    * use epsilon-greedy to sample actions from predicted distribution
    
 #### 7. Continuous A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/continuous_A3C.py)
     * Continuous Asynchronized Actor Critic
