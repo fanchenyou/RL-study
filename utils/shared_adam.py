@@ -25,7 +25,7 @@ class SharedAdam(torch.optim.Adam):
         for group in self.param_groups:
             for p in group['params']:
                 state = self.state[p]
-                state['step'].share_memory_()
+                #state['step'].share_memory_()
                 state['exp_avg'].share_memory_()
                 state['exp_avg_sq'].share_memory_()
 

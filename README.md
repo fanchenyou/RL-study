@@ -29,7 +29,3 @@
 
 #### 6. Discrete A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/discrete_A3C.py)
     * Discrete Asynchronized Actor Critic
-    
-#### 7. Atari game A3C, [ref](https://github.com/ikostrikov/pytorch-a3c)
-    * Learn to play Atari game with Actor Critic
-    * Requires to install opencv (e.g., Ubuntu cmd: sudo apt-get install python-opencv & conda install -c menpo opencv )
