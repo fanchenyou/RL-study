@@ -16,7 +16,7 @@ from utils.shared_adam import SharedAdam
 import gym
 import os
 
-os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["OMP_NUM_THREADS"] = "3"
 
 UPDATE_GLOBAL_ITER = 10
 GAMMA = 0.9
