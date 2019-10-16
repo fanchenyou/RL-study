@@ -1,3 +1,20 @@
+# coding=utf-8
+"""
+Reinforcement Learning (A2C) using Pytroch + multiprocessing.
+A simple implementation for continuous action learning.
+
+Original source https://github.com/seungeunrho/minimalRL/blob/master/a2c.py
+tutorial https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/
+
+This code shows
+    1. [ActorCritic] train Actor and Critic, which has two layers each, while sharing the first layer
+    2. [worker] define a worker function, which has an independent gym environment, and simulates CartPole
+    3. [ParallelEnv] creates multiple processes for workers, and abstract multi-process as if a single process by
+        providing step, reset, etc functions.
+    4. [main] alternates training and testing
+
+"""
+
 import gym
 import torch
 import torch.nn as nn
@@ -8,7 +25,7 @@ import torch.multiprocessing as mp
 import numpy as np
 
 # Hyperparameters
-n_train_processes = 3
+n_train_processes = 3  # number of workers
 learning_rate = 0.0002
 update_interval = 5
 gamma = 0.98
@@ -63,7 +80,7 @@ def worker(worker_id, master_end, worker_end):
 
 
 class ParallelEnv:
-    def __init__(self, n_train_processes):
+    def __init__(self):
         self.nenvs = n_train_processes
         self.waiting = False
         self.closed = False
@@ -147,7 +164,7 @@ def compute_target(v_final, r_lst, mask_lst):
 
 
 if __name__ == '__main__':
-    envs = ParallelEnv(n_train_processes)
+    envs = ParallelEnv()
 
     model = ActorCritic()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
@@ -171,7 +188,7 @@ if __name__ == '__main__':
 
         s_final = torch.from_numpy(s_prime).float()
         v_final = model.v(s_final).detach().clone().numpy()
-        td_target = compute_target(v_final, r_lst, mask_lst)
+        td_target = compute_target(v_final, r_lst, mask_lst)  # compute "predicted rewards" as ground truth to update policy network
 
         td_target_vec = td_target.reshape(-1)
         s_vec = torch.tensor(s_lst).float().reshape(-1, 4)  # 4 == Dimension of state
@@ -180,6 +197,8 @@ if __name__ == '__main__':
 
         pi = model.pi(s_vec, softmax_dim=1)
         pi_a = pi.gather(1, a_vec).reshape(-1)
+
+        # policy loss (Q-network) + critic loss (Critic)
         loss = -(torch.log(pi_a) * advantage.detach()).mean() + \
                F.smooth_l1_loss(model.v(s_vec).reshape(-1), td_target_vec)
 
