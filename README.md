@@ -35,3 +35,6 @@
 
 #### 7. Discrete A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/discrete_A3C.py)
     * Discrete Asynchronized Actor Critic
+    
+#### 8. Quantile-DQN, [paper](https://arxiv.org/pdf/1710.10044.pdf), [ref](https://github.com/senya-ashukha/quantile-regression-dqn-pytorch)
+    * Distributional Reinforcement Learning with Quantile Regression
