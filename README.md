@@ -38,3 +38,6 @@
     
 #### 8. Quantile-DQN, [paper](https://arxiv.org/pdf/1710.10044.pdf), [ref](https://github.com/senya-ashukha/quantile-regression-dqn-pytorch)
     * Distributional Reinforcement Learning with Quantile Regression
+    
+#### 9. Implicit-Quantile-DQN (IQN), [paper](https://arxiv.org/pdf/1806.06923.pdf), [ref](https://github.com/sjYoondeltar/myRL_example)
+    * Implicit Quantile Networks for Distributional Reinforcement Learning
