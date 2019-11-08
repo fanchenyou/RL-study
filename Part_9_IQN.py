@@ -33,6 +33,21 @@ VIEW_DIST = False
 path = "./CartPole_iqn_test"
 
 
+class PolicyNet(nn.Module):
+    def __init__(self, in_size, h_size):
+        super(PolicyNet, self).__init__()
+        self.fc1 = nn.Linear(in_size, h_size, bias=False)
+        self.fc2 = nn.Linear(h_size, 1, bias=False)
+
+    def forward(self, inputs):
+        x = self.fc1(inputs)
+        x = torch.relu(x)
+        score = self.fc2(x)
+        prob = torch.sigmoid(score)
+        return score, prob
+
+
+
 class IQNAgent:
     def __init__(self, a_dim, s_dim,
                  num_tau=32,
@@ -85,18 +100,12 @@ class IQNAgent:
                                                                                 scope='target_params',
                                                                                 trainable=False)
 
-        self.qe_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='eval_params')
-        self.qt_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='target_params')
-
-        self.params_replace = [tf.assign(qt, qe) for qt, qe in zip(self.qt_params, self.qe_params)]
 
         a_indices = tf.stack([tf.range(self.batch_size, dtype=tf.int32), tf.squeeze(tf.to_int32(self.A))], axis=1)
         self.q_theta_eval_a = tf.gather_nd(params=self.q_theta_eval_train, indices=a_indices)
         a_next_max_indices = tf.stack([tf.range(self.batch_size, dtype=tf.int32),
                                        tf.squeeze(tf.to_int32(self.A_))], axis=1)
         self.q_theta_next_a = tf.gather_nd(params=self.q_theta_next_train, indices=a_next_max_indices)
-
-
 
     def _build_net(self, s, tau, scope, trainable):
 
@@ -109,7 +118,7 @@ class IQNAgent:
             init_b = tf.constant_initializer(0.001)
             pi_mtx = tf.constant(np.expand_dims(np.pi * np.arange(0, 64), axis=0), dtype=tf.float32)
 
-            #net_psi = tf.layers.dense(s_reshaped, 16, activation=tf.nn.selu,
+            # net_psi = tf.layers.dense(s_reshaped, 16, activation=tf.nn.selu,
             #                          kernel_initializer=init_w, bias_initializer=init_b, name='psi',
             #                          trainable=trainable)
             cos_tau = tf.cos(tf.matmul(tau_reshaped, pi_mtx))
@@ -117,9 +126,9 @@ class IQNAgent:
                                       kernel_initializer=init_w, bias_initializer=init_b, name='phi',
                                       trainable=trainable)
 
-            #joint_term = tf.multiply(net_psi, net_phi)
-            #joint_term = tf.multiply(s_reshaped, net_phi)
-            joint_term = s_reshaped+tf.multiply(s_reshaped, net_phi)
+            # joint_term = tf.multiply(net_psi, net_phi)
+            # joint_term = tf.multiply(s_reshaped, net_phi)
+            joint_term = s_reshaped + tf.multiply(s_reshaped, net_phi)
 
             q_net = tf.layers.dense(joint_term, 32, activation=tf.nn.selu,
                                     kernel_initializer=init_w, bias_initializer=init_b, name="layer1",
@@ -143,20 +152,7 @@ class IQNAgent:
 
         return q_re_train, q_mean_train, q_re_test, q_mean_test
 
-    def update_target_net(self):
-        self.sess.run(self.params_replace)
 
-    def quantile_huber_loss(self):
-        q_theta_expand = tf.tile(tf.expand_dims(self.q_theta_eval_a, axis=2), [1, 1, self.num_tau_prime])
-        T_theta_expand = tf.tile(tf.expand_dims(self.T, axis=1), [1, self.num_tau_prime, 1])
-
-        u_theta = T_theta_expand - q_theta_expand
-
-        rho_u_tau = self._rho_tau(u_theta, tf.tile(tf.expand_dims(self.tau, axis=2), [1, 1, self.num_tau_prime]))
-
-        qr_loss = tf.reduce_mean(tf.reduce_sum(tf.reduce_mean(rho_u_tau, axis=2), axis=1))
-
-        return qr_loss
 
     def memory_add(self, state, action, reward, next_state, done):
         self.memory += [(state, action, reward, next_state, done)]
@@ -178,7 +174,6 @@ class IQNAgent:
         tau_ = np.random.rand(self.batch_size, self.num_tau_prime)
         tau_beta_ = self.conditional_value_at_risk(self.eta, np.random.rand(self.batch_size, self.num_tau))
 
-
         # TODO
         T_mean_K = self.sess.run(self.q_mean_next_train, feed_dict={self.S_: bs_, self.tau_: tau_beta_})
         ba_ = np.expand_dims(np.argmax(T_mean_K, axis=1), axis=1)
@@ -190,13 +185,6 @@ class IQNAgent:
 
         loss, _ = self.sess.run([self.loss, self.train_op], {self.S: bs, self.A: ba, self.T: T_theta, self.tau: tau})
 
-
-
-
-
-
-
-
         self.iter += 1
 
         if self.eps > self.eps_min:
@@ -204,20 +192,6 @@ class IQNAgent:
 
         return loss
 
-    @staticmethod
-    def _rho_tau(u, tau, kappa=1):
-        # delta = tf.cast(u < 0, 'float')
-        delta = (u < 0).float()
-        if kappa == 0:
-            return (tau - delta) * u
-        else:
-            # return tf.abs(tau - delta) * tf.where(tf.abs(u) <= kappa, 0.5 * tf.square(u),
-            #                                       kappa * (tf.abs(u) - kappa / 2))
-
-            # https://pytorch.org/docs/stable/torch.html#torch.where
-            return torch.abs(tau - delta) * torch.where(torch.abs(u) <= kappa,
-                                                        0.5 * torch.mul(u, u),
-                                                        kappa * (torch.abs(u) - kappa / 2))
     @staticmethod
     def conditional_value_at_risk(eta, tau):
         return eta * tau
@@ -240,11 +214,10 @@ class IQNAgent:
         return action, actions_value, q_dist, tau_beta
 
 
-
 def plot_cdf(actions_value, q_dist, tau_beta):
     y = np.repeat(np.sort(tau_beta), 2, 0)
     plt.ylim([0, 1])
-    plt.xlim([np.max(actions_value)-1, np.max(actions_value)+1])
+    plt.xlim([np.max(actions_value) - 1, np.max(actions_value) + 1])
     plt.xlabel('Q')
     plt.ylabel('CDF')
     plt.step(np.transpose(np.sort(q_dist[0])), np.transpose(y))
@@ -252,6 +225,40 @@ def plot_cdf(actions_value, q_dist, tau_beta):
     plt.draw()
     plt.pause(0.00001)
     plt.clf()
+
+
+def rho_tau(u, tau, kappa=1):
+    # delta = tf.cast(u < 0, 'float')
+    delta = (u < 0).float()
+    if kappa == 0:
+        return (tau - delta) * u
+    else:
+        # return tf.abs(tau - delta) * tf.where(tf.abs(u) <= kappa, 0.5 * tf.square(u),
+        #                                       kappa * (tf.abs(u) - kappa / 2))
+
+        # https://pytorch.org/docs/stable/torch.html#torch.where
+        return torch.abs(tau - delta) * torch.where(torch.abs(u) <= kappa,
+                                                    0.5 * torch.mul(u, u),
+                                                    kappa * (torch.abs(u) - kappa / 2))
+
+
+def quantile_huber_loss(T, q_theta_eval_a, num_tau_prime, tau):
+    # q_theta_expand = tf.tile(tf.expand_dims(self.q_theta_eval_a, axis=2), [1, 1, self.num_tau_prime])
+    # T_theta_expand = tf.tile(tf.expand_dims(self.T, axis=1), [1, self.num_tau_prime, 1])
+
+    q_theta_expand = q_theta_eval_a[:, :, None].repeat(1, 1, num_tau_prime)
+    T_theta_expand = T[:, None, :].repeat(1, num_tau_prime, 1)
+
+    u_theta = T_theta_expand - q_theta_expand
+
+    # rho_u_tau = self._rho_tau(u_theta, tf.tile(tf.expand_dims(self.tau, axis=2), [1, 1, self.num_tau_prime]))
+    tau2 = tau[:, :, None].repeat(1, 1, num_tau_prime)
+    rho_u_tau = rho_tau(u_theta, tau2)
+
+    # qr_loss = tf.reduce_mean(tf.reduce_sum(tf.reduce_mean(rho_u_tau, axis=2), axis=1))
+    qr_loss = torch.mean(rho_u_tau)
+
+    return qr_loss
 
 
 def train():
@@ -266,10 +273,7 @@ def train():
 
     loss = self.quantile_huber_loss()
 
-
-
     optim = torch.optim.Adam(IQNbrain.parameters(), lr=LEARNING_RATE)
-
 
     all_rewards = []
     frame_rewards = []
@@ -322,7 +326,7 @@ def train():
         frame_rewards.append(frame)
 
         print("Episode:{} | Frames:{} | Reward:{} | Recent reward:{}".format(episode, frame, rall,
-                                                                                          np.mean(recent_rlist)))
+                                                                             np.mean(recent_rlist)))
 
     if os.path.isdir(path):
         shutil.rmtree(path)
@@ -340,9 +344,10 @@ def train():
     plt.subplot(212)
     plt.title('Loss')
     plt.plot(loss_frame, loss_list)
-    #plt.ylim(0, 20)
+    # plt.ylim(0, 20)
     plt.show()
     plt.close()
+
 
 #
 # def test():

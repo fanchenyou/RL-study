@@ -19,6 +19,9 @@ from collections import OrderedDict
 from tabulate import tabulate
 from pandas import DataFrame
 from time import gmtime, strftime
+
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from IPython import display
 
