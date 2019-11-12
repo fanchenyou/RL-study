@@ -1,15 +1,25 @@
+'''
+Please refer to the paper for detail explanations in code comments
+https://arxiv.org/abs/1806.06923
+
+Original code source
+https://github.com/sungyubkim/Deep_RL_with_pytorch/blob/master/6_Uncertainty_in_RL/6_3_IQN_ver_A.ipynb
+
+Tutorial
+
+
+'''
+
 import gym
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
-import random
 import os
 import pickle
 import time
 from collections import deque
-from copy import deepcopy
 from tqdm import tqdm
 
 import matplotlib
@@ -88,8 +98,13 @@ class ConvNet(nn.Module):
             nn.Conv2d(64, 64, kernel_size=3, stride=1),
             nn.ReLU(),
         )
+
+        # Eq(4), additional function for computing
+        # embedding for the sampled quantile \tau
         self.phi = nn.Linear(1, 7 * 7 * 64, bias=False)
         self.phi_bias = nn.Parameter(torch.zeros(7 * 7 * 64))
+        # mapping the embedding to a single value
+        # as quantile regression
         self.fc = nn.Linear(7 * 7 * 64, 512)
 
         # action value distribution
@@ -106,18 +121,16 @@ class ConvNet(nn.Module):
                     nn.init.constant_(m.bias, 0.0)
 
     def forward(self, x):
-        # x.size(0) : minibatch size
-        mb_size = x.size(0)
-
+        # print(x.size(0)) # batch size
         x = self.feature_extraction(x / 255.0)  # (m, 7 * 7 * 64)
-        tau = torch.rand(N_QUANT, 1)  # (N_QUANT, 1)
-        quants = torch.arange(0, N_QUANT, 1.0)
-        if USE_GPU:
-            tau = tau.cuda()
-            quants = quants.cuda()
+        tau = torch.rand(N_QUANT, 1)  # sample N quantiles
+        quants = torch.arange(0, N_QUANT, 1.0)  # 0,1,...,N-1
+
+        # Eq(4), parameterize sampled quantiles
         cos_trans = torch.cos(quants * tau * 3.141592).unsqueeze(2)  # (N_QUANT, N_QUANT, 1)
         rand_feat = F.relu(self.phi(cos_trans).mean(dim=1) + self.phi_bias.unsqueeze(0)).unsqueeze(0)
 
+        # Eq for Z above Eq(4) -  Z(x,a) = f( psi(x) dot phi(tau) )
         x = x.view(x.size(0), -1).unsqueeze(1)  # (m, 1, 7 * 7 * 64)
         x = x * rand_feat  # (m, N_QUANT, 7 * 7 * 64)
         x = F.relu(self.fc(x))  # (m, N_QUANT, 512)
@@ -136,27 +149,25 @@ class ConvNet(nn.Module):
 
 class DQN(object):
     def __init__(self):
+
+        # save two networks, one current, one previous
         self.pred_net, self.target_net = ConvNet(), ConvNet()
         # sync eval target
         self.update_target(self.target_net, self.pred_net, 1.0)
-        # use gpu
-        if USE_GPU:
-            self.pred_net.cuda()
-            self.target_net.cuda()
 
-        # simulator step conter
+        # simulator step counter
         self.memory_counter = 0
         # target network step counter
         self.learn_step_counter = 0
 
-        # ceate the replay buffer
+        # create the replay buffer
         self.replay_buffer = ReplayBuffer(MEMORY_CAPACITY)
 
         # define optimizer
         self.optimizer = torch.optim.Adam(self.pred_net.parameters(), lr=LR)
 
     def update_target(self, target, pred, update_rate):
-        # update target network parameters using predcition network
+        # update target network parameters using prediction network
         for target_param, pred_param in zip(target.parameters(), pred.parameters()):
             target_param.data.copy_((1.0 - update_rate) \
                                     * target_param.data + update_rate * pred_param.data)
@@ -173,8 +184,6 @@ class DQN(object):
 
     def choose_action(self, x, EPSILON):
         x = torch.FloatTensor(x)
-        if USE_GPU:
-            x = x.cuda()
 
         if np.random.uniform() >= EPSILON:
             # greedy case
@@ -205,9 +214,6 @@ class DQN(object):
         b_s_ = torch.FloatTensor(b_s_)
         b_d = torch.FloatTensor(b_d)
 
-        if USE_GPU:
-            b_s, b_a, b_r, b_s_, b_d = b_s.cuda(), b_a.cuda(), b_r.cuda(), b_s_.cuda(), b_d.cuda()
-
         # action value distribution prediction
         q_eval, q_eval_tau = self.pred_net(b_s)  # (m, N_ACTIONS, N_QUANT), (N_QUANT, 1)
         mb_size = q_eval.size(0)
@@ -225,7 +231,7 @@ class DQN(object):
         # (m, N_QUANT)
         q_target = q_target.unsqueeze(1).detach()  # (m , 1, N_QUANT)
 
-        # quantile Huber loss
+        # quantile Huber loss, in section 2.3
         u = q_target.detach() - q_eval  # (m, N_QUANT, N_QUANT)
         tau = q_eval_tau.unsqueeze(0)  # (1, N_QUANT, 1)
         # note that tau is for present quantile
@@ -236,8 +242,6 @@ class DQN(object):
 
         # calc importance weighted loss
         b_w = torch.Tensor(b_w)
-        if USE_GPU:
-            b_w = b_w.cuda()
         loss = torch.mean(b_w * loss)
 
         # backprop loss
@@ -251,7 +255,7 @@ dqn = DQN()
 # model load with check
 if LOAD and os.path.isfile(PRED_PATH) and os.path.isfile(TARGET_PATH):
     dqn.load_model()
-    pkl_file = open(RESULT_PATH,'rb')
+    pkl_file = open(RESULT_PATH, 'rb')
     result = pickle.load(pkl_file)
     pkl_file.close()
     print('Load complete!')
@@ -269,7 +273,7 @@ start_time = time.time()
 # env reset
 s = np.array(env.reset())
 
-for step in tqdm(range(1, STEP_NUM//N_ENVS+1)):
+for step in tqdm(range(1, STEP_NUM // N_ENVS + 1)):
     a = dqn.choose_action(s, EPSILON)
 
     # take action and get next state
@@ -277,7 +281,8 @@ for step in tqdm(range(1, STEP_NUM//N_ENVS+1)):
     # log arrange
     for info in infos:
         maybeepinfo = info.get('episode')
-        if maybeepinfo: epinfobuf.append(maybeepinfo)
+        if maybeepinfo:
+            epinfobuf.append(maybeepinfo)
     s_ = np.array(s_)
 
     # clip rewards for numerical stability
@@ -290,10 +295,10 @@ for step in tqdm(range(1, STEP_NUM//N_ENVS+1)):
     # annealing the epsilon(exploration strategy)
     if step <= int(1e+3):
         # linear annealing to 0.9 until million step
-        EPSILON -= 0.9/1e+3
+        EPSILON -= 0.9 / 1e+3
     elif step <= int(1e+4):
         # linear annealing to 0.99 until the end
-        EPSILON -= 0.09/(1e+4 - 1e+3)
+        EPSILON -= 0.09 / (1e+4 - 1e+3)
 
     # if memory fill 50K and mod 4 = 0(for speed issue), learn pred net
     if (LEARN_START <= dqn.memory_counter) and (dqn.memory_counter % LEARN_FREQ == 0):
@@ -304,13 +309,13 @@ for step in tqdm(range(1, STEP_NUM//N_ENVS+1)):
         # check time interval
         time_interval = round(time.time() - start_time, 2)
         # calc mean return
-        mean_100_ep_return = round(np.mean([epinfo['r'] for epinfo in epinfobuf]),2)
+        mean_100_ep_return = round(np.mean([epinfo['r'] for epinfo in epinfobuf]), 2)
         result.append(mean_100_ep_return)
         # print log
-        print('Used Step:',dqn.memory_counter,
+        print('Used Step:', dqn.memory_counter,
               'EPS: ', round(EPSILON, 3),
               '| Mean ep 100 return: ', mean_100_ep_return,
-              '| Used Time:',time_interval)
+              '| Used Time:', time_interval)
         # save model
         dqn.save_model()
         pkl_file = open(RESULT_PATH, 'wb')
