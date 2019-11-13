@@ -1,6 +1,5 @@
-
-
 """
+paper https://arxiv.org/abs/1710.10044
 
 Original source https://github.com/senya-ashukha/quantile-regression-dqn-pytorch/blob/master/qr-dqn-solution-cool.ipynb
 
@@ -19,7 +18,6 @@ import numpy as np
 
 from collections import OrderedDict
 from tabulate import tabulate
-from pandas import DataFrame
 from time import gmtime, strftime
 
 import matplotlib
@@ -89,8 +87,8 @@ class ReplayMemory:
         self.memory = []
 
     def push(self, state, action, next_state, reward, done):
-        transition = torch.Tensor([state]), torch.Tensor([action]), torch.Tensor([next_state]), torch.Tensor(
-            [reward]), torch.Tensor([done])
+        transition = torch.Tensor([state]), torch.Tensor([action]), torch.Tensor([next_state]), \
+                     torch.Tensor([reward]), torch.Tensor([done])
         self.memory.append(transition)
         if len(self.memory) > self.capacity:
             del self.memory[0]

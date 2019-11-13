@@ -89,8 +89,8 @@ class ReplayMemory:
         self.memory = []
 
     def push(self, state, action, next_state, reward, done):
-        transition = torch.Tensor([state]), torch.Tensor([action]), torch.Tensor([next_state]), torch.Tensor(
-            [reward]), torch.Tensor([done])
+        transition = torch.Tensor([state]), torch.Tensor([action]), torch.Tensor([next_state]), \
+                     torch.Tensor([reward]), torch.Tensor([done])
         self.memory.append(transition)
         if len(self.memory) > self.capacity:
             del self.memory[0]
