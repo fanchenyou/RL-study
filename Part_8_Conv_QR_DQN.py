@@ -12,6 +12,7 @@ import torch.nn as nn
 
 from utils.wrappers import make_atari, wrap_deepmind, wrap_pytorch
 
+
 class ReplayBuffer(object):
     def __init__(self, size):
         """Create Replay buffer.
@@ -124,6 +125,7 @@ class QRCnnDQN(nn.Module):
             action = random.randrange(self.num_actions)
         return action
 
+
 def update_target(current_model, target_model):
     target_model.load_state_dict(current_model.state_dict())
 
@@ -162,6 +164,7 @@ if __name__ == "__main__":
     replay_buffer = ReplayBuffer(10000)
 
     update_target(current_model, target_model)
+
 
     def compute_td_loss(batch_size):
         state, action, reward, next_state, done = replay_buffer.sample(batch_size)
@@ -206,7 +209,6 @@ if __name__ == "__main__":
         optimizer.step()
 
         return loss
-
 
 
     state = env.reset()
