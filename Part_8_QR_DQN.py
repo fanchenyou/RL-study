@@ -128,7 +128,7 @@ class Network(nn.Module):
     def select_action(self, state, eps):
         if not isinstance(state, torch.Tensor):
             state = torch.Tensor([state])
-        action = torch.randint(0, 2, (1,))
+        action = torch.randint(0, self.num_actions, (1,))
         if random.random() > eps:
             action = self.forward(state).mean(2).max(1)[1]
         return int(action)
@@ -143,8 +143,8 @@ if __name__ == "__main__":
     eps_start, eps_end, eps_dec = 0.9, 0.1, 500
     eps = lambda steps: eps_end + (eps_start - eps_end) * np.exp(-1. * steps / eps_dec)
 
-    Z = Network(len_state=len(env.reset()), num_quant=2, num_actions=env.action_space.n)
-    Ztgt = Network(len_state=len(env.reset()), num_quant=2, num_actions=env.action_space.n)
+    Z = Network(len_state=len(env.reset()), num_quant=8, num_actions=env.action_space.n)
+    Ztgt = Network(len_state=len(env.reset()), num_quant=8, num_actions=env.action_space.n)
     optimizer = torch.optim.Adam(Z.parameters(), 1e-3)
 
     steps_done = 0
@@ -172,13 +172,18 @@ if __name__ == "__main__":
             if len(memory) < batch_size: break
             states, actions, rewards, next_states, dones = memory.sample(batch_size)
 
+            # q_val of current states
             theta = Z(states)[np.arange(batch_size), actions]
 
+            # q_val of next states
             Znext = Ztgt(next_states).detach()
             Znext_max = Znext[np.arange(batch_size), Znext.mean(2).max(1)[1]]
-            Ttheta = rewards + gamma * (1 - dones) * Znext_max
 
+            # temporal difference
+            Ttheta = rewards + gamma * (1 - dones) * Znext_max
             diff = Ttheta.t().unsqueeze(-1) - theta
+
+            # Eq(10) in paper
             loss = huber(diff) * (tau - (diff.detach() < 0).float()).abs()
             loss = loss.mean()
 
