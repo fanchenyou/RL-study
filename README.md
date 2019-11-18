@@ -47,7 +47,7 @@
     * Add NN and CNN examples
     
     
-#### 10. Deep Deterministic Policy Gradient (DDPG), [tutorial](https://spinningup.openai.com/en/latest/algorithms/ddpg.html), [ref](https://github.com/samlanka/DDPG-PyTorch)  
+#### 10. Deep Deterministic Policy Gradient (DDPG), [tutorial](https://spinningup.openai.com/en/latest/algorithms/ddpg.html), [ref](https://github.com/seungeunrho/minimalRL/blob/master/ddpg.py)  
     * Concurrently learn a Q-function and a policy. 
     * Use off-policy data and the Bellman equation to learn the Q-function.
     * Use the Q-function to learn the policy.
