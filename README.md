@@ -1,5 +1,5 @@
 ## Several Reinforcement models
-
+![rl_methods](/pics/rl.jpeg)
 #### 0. Q-tables, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Q-Table.ipynb)
     * Learn Q-tables with policy gradient
  
@@ -47,6 +47,7 @@
     * Add NN and CNN examples
     
     
-#### 9. Deep Deterministic Policy Gradient (DDPG), [tutorial](https://spinningup.openai.com/en/latest/algorithms/ddpg.html), [ref](https://github.com/samlanka/DDPG-PyTorch)  
-    * It concurrently learns a Q-function and a policy. 
-    * It uses off-policy data and the Bellman equation to learn the Q-function, and uses the Q-function to learn the policy.
+#### 10. Deep Deterministic Policy Gradient (DDPG), [tutorial](https://spinningup.openai.com/en/latest/algorithms/ddpg.html), [ref](https://github.com/samlanka/DDPG-PyTorch)  
+    * Concurrently learn a Q-function and a policy. 
+    * Use off-policy data and the Bellman equation to learn the Q-function.
+    * Use the Q-function to learn the policy.
