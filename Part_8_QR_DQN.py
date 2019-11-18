@@ -3,6 +3,8 @@ paper https://arxiv.org/abs/1710.10044
 
 Original source https://github.com/senya-ashukha/quantile-regression-dqn-pytorch/blob/master/qr-dqn-solution-cool.ipynb
 
+tutorial https://xlnwel.github.io/blog/reinforcement%20learning/IQN/
+
 MountainCar problem: https://gym.openai.com/envs/MountainCar-v0/   https://github.com/openai/gym/wiki/MountainCar-v0
 """
 
