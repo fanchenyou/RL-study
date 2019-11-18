@@ -1,5 +1,5 @@
 ## Several Reinforcement models
-![rl_methods](/pics/rl.jpeg)
+![rl_methods](/pics/rl.png)
 #### 0. Q-tables, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Q-Table.ipynb)
     * Learn Q-tables with policy gradient
  
