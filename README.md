@@ -1,7 +1,8 @@
 ## Several Reinforcement models
 ![rl_methods](/pics/rl.png)
-#### 0. Q-tables, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Q-Table.ipynb)
+#### 0. Q-tables, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Q-Table.ipynb) [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter01/tic_tac_toe.py)
     * Learn Q-tables with policy gradient
+    * Add tic_tac_toe examples
  
 #### 1. Q-loss with NN, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Q-Network.ipynb)
     * Learn policy network with MSE Loss
@@ -45,7 +46,6 @@
   
     * Implicit Quantile Networks for Distributional Reinforcement Learning
     * Add NN and CNN examples
-    
     
 #### 10. Deep Deterministic Policy Gradient (DDPG), [tutorial](https://spinningup.openai.com/en/latest/algorithms/ddpg.html), [ref](https://github.com/seungeunrho/minimalRL/blob/master/ddpg.py)  
     * Concurrently learn a Q-function and a policy. 
