@@ -8,6 +8,9 @@
 # declaration at the top                                              #
 #######################################################################
 
+# code source https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter01/tic_tac_toe.py
+# code tutorial https://github.com/applenob/rl_learn/blob/master/notes/intro_note_01.md
+
 import numpy as np
 import pickle
 
@@ -115,6 +118,9 @@ def get_all_states_impl(current_state, current_symbol, all_states):
                         get_all_states_impl(new_state, -current_symbol, all_states)
 
 
+#############################
+# define state dictionary
+#############################
 def get_all_states():
     current_symbol = 1
     current_state = State()
@@ -207,7 +213,11 @@ class Player:
             else:
                 self.estimations[hash_val] = 0.5
 
+    ##############################
     # update value estimation
+    # use temporal difference
+    # V(s) = V(s) + a[V(s')-V(s)]
+    ##############################
     def backup(self):
         states = [state.hash() for state in self.states]
 
@@ -219,6 +229,7 @@ class Player:
             self.estimations[state] += self.step_size * td_error
 
     # choose an action based on the state
+    # epsilon-greedy
     def act(self):
         state = self.states[-1]
         next_states = []
@@ -298,8 +309,8 @@ def train(epochs, print_every_n=500):
             player2_win += 1
         if i % print_every_n == 0:
             print('Epoch %d, player 1 winrate: %.02f, player 2 winrate: %.02f' % (i, player1_win / i, player2_win / i))
-        player1.backup()
-        player2.backup()
+        player1.backup()  # update first player's estimation dictionary
+        player2.backup()  # update second player's estimation dictionary
         judger.reset()
     player1.save_policy()
     player2.save_policy()
