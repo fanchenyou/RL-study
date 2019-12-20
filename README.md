@@ -4,12 +4,19 @@
     * Learn Q-tables with policy gradient
     * Add tic_tac_toe examples
  
-#### 1. MDP, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter03/grid_world.py)
+#### 1.1 Markov Decision Process, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter03/grid_world.py)
     * MDP assumes a finite number of states (env) and actions (agent). 
     * Agent observes a state and executes an action, which incurs intermediate costs to be minimized.
     * The goal is to maximize the (expected) accumulated rewards.
     * Use Bellman equation to update each state value.
     
+#### 1.2 Dynamic Programming, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/tree/master/chapter04) [tutorial](https://www.analyticsvidhya.com/blog/2018/09/reinforcement-learning-model-based-planning-dynamic-programming/)    
+    * Dynamic programming algorithms solve MDP as planning problems. 
+    * Given a MDP, find an optimal policy for the agent to follow. It contains two main steps:
+    * a. Break the problem into subproblems and solve it
+    * b. Find overall optimal solution to the problem at hand
+    * Usually contains 1) policy iteration 2) value iteration
+ 
 #### 2. Bandit problem, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Contextual-Policy.ipynb)
     * Bandit problem
     * Train a neural network to learn a policy for picking actions using feedback from the environment
