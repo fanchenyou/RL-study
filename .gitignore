@@ -24,6 +24,7 @@ data/shakespeare
 .settings
 /lib/
 OK/
+sync.sh
 gif-qa/OK
 gif-qa/extract_features
 gif-qa/data/dataset/*.csv

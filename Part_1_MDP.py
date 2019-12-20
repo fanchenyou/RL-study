@@ -11,10 +11,10 @@
 
 import numpy as np
 import matplotlib
+
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from matplotlib.table import Table
-
 
 WORLD_SIZE = 5
 A_POS = [0, 1]
@@ -62,9 +62,9 @@ def draw_image(image):
 
     # Row and column labels...
     for i in range(len(image)):
-        tb.add_cell(i, -1, width, height, text=i+1, loc='right',
+        tb.add_cell(i, -1, width, height, text=i + 1, loc='right',
                     edgecolor='none', facecolor='none')
-        tb.add_cell(-1, i, width, height/2, text=i+1, loc='center',
+        tb.add_cell(-1, i, width, height / 2, text=i + 1, loc='center',
                     edgecolor='none', facecolor='none')
 
     ax.add_table(tb)
@@ -82,8 +82,9 @@ def figure_3_2():
                     # bellman equation
                     new_value[i, j] += ACTION_PROB * (reward + DISCOUNT * value[next_i, next_j])
         if np.sum(np.abs(value - new_value)) < 1e-4:
+            # print(new_value)
             draw_image(np.round(new_value, decimals=2))
-            plt.savefig('../images/figure_3_2.png')
+            plt.savefig('./img/figure_3_2.png')
             plt.close()
             break
         value = new_value
@@ -104,7 +105,7 @@ def figure_3_5():
                 new_value[i, j] = np.max(values)
         if np.sum(np.abs(new_value - value)) < 1e-4:
             draw_image(np.round(new_value, decimals=2))
-            plt.savefig('../images/figure_3_5.png')
+            plt.savefig('./img/figure_3_5.png')
             plt.close()
             break
         value = new_value

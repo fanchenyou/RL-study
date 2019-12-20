@@ -4,10 +4,12 @@
     * Learn Q-tables with policy gradient
     * Add tic_tac_toe examples
  
-#### 1. Q-loss with NN, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Q-Network.ipynb)
-    * Learn policy network with MSE Loss
-    * Re-written in Pytorch 1.2
-
+#### 1. MDP, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter03/grid_world.py)
+    * MDP assumes a finite number of states (env) and actions (agent). 
+    * Agent observes a state and executes an action, which incurs intermediate costs to be minimized.
+    * The goal is to maximize the (expected) accumulated rewards.
+    * Use Bellman equation to update each state value.
+    
 #### 2. Bandit problem, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Contextual-Policy.ipynb)
     * Bandit problem
     * Train a neural network to learn a policy for picking actions using feedback from the environment
