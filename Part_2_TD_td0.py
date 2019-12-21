@@ -184,7 +184,7 @@ def example_6_2():
     rms_error()
     plt.tight_layout()
 
-    plt.savefig('../images/example_6_2.png')
+    plt.savefig('./img/example_6_2.png')
     plt.close()
 
 
@@ -199,7 +199,7 @@ def figure_6_2():
     plt.ylabel('RMS error')
     plt.legend()
 
-    plt.savefig('../images/figure_6_2.png')
+    plt.savefig('./img/figure_6_2.png')
     plt.close()
 
 
