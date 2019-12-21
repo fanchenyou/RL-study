@@ -26,7 +26,7 @@
     * MC needs to wait until the final reward before any state-action pair values can be updated.
     * Once the final reward was received, the path taken to reach the final state would need to be traced back and each value updated accordingly.
 
-#### 2 Temporal Difference, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/tree/master/chapter06), [tutorial](https://www.cse.unsw.edu.au/~cs9417ml/RL1/tdlearning.html)
+#### 2. Temporal Difference, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/tree/master/chapter06), [tutorial](https://www.cse.unsw.edu.au/~cs9417ml/RL1/tdlearning.html)
     * Temporal Difference (TD) Learning is used to estimate value functions. 
     * Unlike MC, TD estimates the final reward at each state and the state-action value updates for every step. 
     * TD is a combination of DP and MC.
