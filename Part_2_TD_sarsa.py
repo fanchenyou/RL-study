@@ -6,10 +6,12 @@
 # declaration at the top                                              #
 #######################################################################
 
-# https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter06/windy_grid_world.py
+# Section 6.4 http://incompleteideas.net/book/bookdraft2017nov5.pdf
+# code source https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter06/windy_grid_world.py
 
 import numpy as np
 import matplotlib
+
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
@@ -41,6 +43,7 @@ START = [3, 0]
 GOAL = [3, 7]
 ACTIONS = [ACTION_UP, ACTION_DOWN, ACTION_LEFT, ACTION_RIGHT]
 
+
 def step(state, action):
     i, j = state
     if action == ACTION_UP:
@@ -53,6 +56,7 @@ def step(state, action):
         return [max(i - WIND[j], 0), min(j + 1, WORLD_WIDTH - 1)]
     else:
         assert False
+
 
 # play for an episode
 def episode(q_value):
@@ -76,7 +80,8 @@ def episode(q_value):
             next_action = np.random.choice(ACTIONS)
         else:
             values_ = q_value[next_state[0], next_state[1], :]
-            next_action = np.random.choice([action_ for action_, value_ in enumerate(values_) if value_ == np.max(values_)])
+            next_action = np.random.choice(
+                [action_ for action_, value_ in enumerate(values_) if value_ == np.max(values_)])
 
         # Sarsa update
         q_value[state[0], state[1], action] += \
@@ -86,6 +91,7 @@ def episode(q_value):
         action = next_action
         time += 1
     return time
+
 
 def figure_6_3():
     q_value = np.zeros((WORLD_HEIGHT, WORLD_WIDTH, 4))
@@ -105,7 +111,7 @@ def figure_6_3():
     plt.xlabel('Time steps')
     plt.ylabel('Episodes')
 
-    plt.savefig('../images/figure_6_3.png')
+    plt.savefig('./img/figure_6_3.png')
     plt.close()
 
     # display the optimal policy
@@ -129,6 +135,7 @@ def figure_6_3():
     for row in optimal_policy:
         print(row)
     print('Wind strength for each column:\n{}'.format([str(w) for w in WIND]))
+
 
 if __name__ == '__main__':
     figure_6_3()

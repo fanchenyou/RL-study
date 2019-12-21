@@ -6,10 +6,12 @@
 # declaration at the top                                              #
 #######################################################################
 
+# Book http://incompleteideas.net/book/bookdraft2017nov5.pdf  P102 Example 6.2
 # https://raw.githubusercontent.com/ShangtongZhang/reinforcement-learning-an-introduction/master/chapter06/random_walk.py
 
 import numpy as np
 import matplotlib
+
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from tqdm import tqdm
@@ -25,6 +27,7 @@ VALUES[1:6] = 0.5
 VALUES[6] = 1
 
 # set up true state values
+# The true values of all the states, A through E, are 1/6, 2/6, ... 5/6, 6/6
 TRUE_VALUE = np.zeros(7)
 TRUE_VALUE[1:6] = np.arange(1, 6) / 6.0
 TRUE_VALUE[6] = 1
@@ -50,6 +53,8 @@ def temporal_difference(values, alpha=0.1, batch=False):
         reward = 0
         trajectory.append(state)
         # TD update
+        # if not batch update, immediately updates state value
+        # else postpone updating, but updates the values in batch_updating function
         if not batch:
             values[old_state] += alpha * (reward + values[state] - values[old_state])
         if state == 6 or state == 0:
@@ -62,7 +67,7 @@ def temporal_difference(values, alpha=0.1, batch=False):
 # @alpha: step size
 # @batch: whether to update @values
 def monte_carlo(values, alpha=0.1, batch=False):
-    state = 3
+    state = 3  # the index of current position
     trajectory = [3]
 
     # if end up with left terminal state, all returns are 0
@@ -176,11 +181,11 @@ def batch_updating(method, episodes, alpha=0.001):
 
 
 def example_6_2():
-    plt.figure(figsize=(10, 20))
-    plt.subplot(2, 1, 1)
+    plt.figure(figsize=(20, 10))
+    plt.subplot(1, 2, 1)
     compute_state_value()
 
-    plt.subplot(2, 1, 2)
+    plt.subplot(1, 2, 2)
     rms_error()
     plt.tight_layout()
 
@@ -204,5 +209,5 @@ def figure_6_2():
 
 
 if __name__ == '__main__':
-    example_6_2()
-    figure_6_2()
+    example_6_2()  # TD(0), or, one-step TD
+    figure_6_2()  # Batch updating version of TD(0) - reuse all history experience
