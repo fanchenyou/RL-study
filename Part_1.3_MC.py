@@ -44,7 +44,6 @@ def target_policy_player(usable_ace_player, player_sum, dealer_card):
     return POLICY_PLAYER[player_sum]
 
 
-
 #####################################################################
 # policy for dealer
 # If dealer has less than 17, dealer *MUST* get addition cards (HIT)
@@ -204,6 +203,8 @@ def play(policy_player, initial_state=None, initial_action=None):
 
 
 # Monte Carlo Sample with On-Policy
+# https://github.com/applenob/rl_learn/blob/master/notes/intro_note_05.md
+# Only model "state", not involve "action"
 def monte_carlo_on_policy(episodes):
     states_usable_ace = np.zeros((10, 10))
     # initialze counts to 1 to avoid 0 being divided
@@ -214,7 +215,7 @@ def monte_carlo_on_policy(episodes):
     for _ in tqdm(range(0, episodes)):
         _, reward, player_trajectory = play(target_policy_player)
         # print(player_trajectory)
-        for (usable_ace, player_sum, dealer_card), _ in player_trajectory:
+        for (usable_ace, player_sum, dealer_card), _ in player_trajectory:  # not use "action" from history trajectory
             player_sum -= 12
             dealer_card -= 1
             if usable_ace:
@@ -227,6 +228,8 @@ def monte_carlo_on_policy(episodes):
 
 
 # Monte Carlo with Exploring Starts
+# https://github.com/applenob/rl_learn/blob/master/notes/intro_note_05.md
+# Model both "state" and "action"
 def monte_carlo_es(episodes):
     # (playerSum, dealerCard, usableAce, action)
     state_action_values = np.zeros((10, 10, 2, 2))
@@ -256,8 +259,8 @@ def monte_carlo_es(episodes):
         # at start, random choose, then target_policy
         current_policy = behavior_policy if episode else target_policy_player
         _, reward, trajectory = play(current_policy, initial_state, initial_action)
-        #print(trajectory)
-        for (usable_ace, player_sum, dealer_card), action in trajectory:
+        # print(trajectory)
+        for (usable_ace, player_sum, dealer_card), action in trajectory:  # use "action" from history trajectory
             usable_ace = int(usable_ace)
             player_sum -= 12
             dealer_card -= 1
@@ -269,6 +272,7 @@ def monte_carlo_es(episodes):
 
 
 # Monte Carlo Sample with Off-Policy
+# https://github.com/applenob/rl_learn/blob/master/notes/intro_note_05.md
 def monte_carlo_off_policy(episodes):
     initial_state = [True, 13, 2]
 
