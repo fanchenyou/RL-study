@@ -10,13 +10,23 @@
     * The goal is to maximize the (expected) accumulated rewards.
     * Use Bellman equation to update each state value.
     
-#### 1.2 Dynamic Programming, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/tree/master/chapter04) [tutorial](https://www.analyticsvidhya.com/blog/2018/09/reinforcement-learning-model-based-planning-dynamic-programming/)    
+#### 1.2 Dynamic Programming, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/tree/master/chapter04), [tutorial](https://www.analyticsvidhya.com/blog/2018/09/reinforcement-learning-model-based-planning-dynamic-programming/)    
     * Dynamic programming algorithms solve MDP as planning problems. 
+    * Need to know entire env.
     * Given a MDP, find an optimal policy for the agent to follow. It contains two main steps:
     * a. Break the problem into subproblems and solve it
     * b. Find overall optimal solution to the problem at hand
     * Usually contains 1) policy iteration 2) value iteration
- 
+    
+#### 1.3 Monte Carlo, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter05/blackjack.py), [tutorial](https://oneraynyday.github.io/ml/2018/05/24/Reinforcement-Learning-Monte-Carlo/)    
+    * DP needs full knowledge of the env.
+    * DP can start at any state and learn next state.
+    * DP learns step-by-step.
+    * MC samples from the experience to estimate the env.
+    * MC can also start at any state, but need take all possible actions at every start of an episode.
+    * MC learns episode-by-episode.
+    * Use Importance Sampling to learn the sampling strategy.
+    
 #### 2. Bandit problem, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Contextual-Policy.ipynb)
     * Bandit problem
     * Train a neural network to learn a policy for picking actions using feedback from the environment
