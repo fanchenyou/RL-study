@@ -2,7 +2,7 @@
 ![rl_methods](/pics/rl.png)
 #### 0. Q-tables, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Q-Table.ipynb), [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter01/tic_tac_toe.py)
     * Learn Q-tables with policy gradient
-    * Add tic_tac_toe examples
+    * Bandit, tic_tac_toe examples
  
 #### 1.1 Markov Decision Process, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter03/grid_world.py)
     * MDP assumes a finite number of states (env) and actions (agent). 
@@ -26,20 +26,16 @@
     * MC needs to wait until the final reward before any state-action pair values can be updated.
     * Once the final reward was received, the path taken to reach the final state would need to be traced back and each value updated accordingly.
 
-#### 1.4 Temporal Difference, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/tree/master/chapter06), [tutorial](https://www.cse.unsw.edu.au/~cs9417ml/RL1/tdlearning.html)
+#### 2 Temporal Difference, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/tree/master/chapter06), [tutorial](https://www.cse.unsw.edu.au/~cs9417ml/RL1/tdlearning.html)
     * Temporal Difference (TD) Learning is used to estimate value functions. 
-    * Unlike MC, TD estimates the final reward at each state and the state-action value updates for every step of. 
+    * Unlike MC, TD estimates the final reward at each state and the state-action value updates for every step. 
     * TD is a combination of DP and MC.
     * On-Policy v.s. Off-Policy Learning:
     * On-Policy TD can learn the value of the policy that is used to make decisions. 
     * Off-Policy TD can learn different policies for behaviour and estimation. 
-
-#### 2. Bandit problem, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Contextual-Policy.ipynb)
-    * Bandit problem
-    * Train a neural network to learn a policy for picking actions using feedback from the environment
-    * Use policy gradients to adjust NN's weights through gradient descent
-    * Re-written in Pytorch 1.2
-
+    * Behaviour policy is usually "soft" so there is sufficient exploration going on.
+    * Include Bootstrap, Sarsa, Q-learning.
+    
 #### 3. Modeling environment, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Model-Network.ipynb), [tutorial](https://medium.com/@awjuliani/simple-reinforcement-learning-with-tensorflow-part-3-model-based-rl-9a6fe0cce99)
     * Add separate network to model physical environment
     * Use policy gradients to adjust NN's weights through gradient descent
