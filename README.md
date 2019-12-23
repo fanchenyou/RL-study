@@ -37,6 +37,7 @@
     * TD(0) - learn state-value function v(s)
     # Sarsa(On-policy) - learn an action-value function q(a,s)
     # Q-learning(Off-policy) - learn action-value regardless of selected action
+    # Act-critic - critic is mearsuing V(s), actor is an independent policy. Use actor to choose action, and use TD to update critic. 
     
 #### 3. Modeling environment, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Model-Network.ipynb), [tutorial](https://medium.com/@awjuliani/simple-reinforcement-learning-with-tensorflow-part-3-model-based-rl-9a6fe0cce99)
     * Add separate network to model physical environment

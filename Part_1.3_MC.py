@@ -228,6 +228,7 @@ def monte_carlo_on_policy(episodes):
 
 
 # Monte Carlo with Exploring Starts
+# every possible state-action has possible to choose as initial pair
 # https://github.com/applenob/rl_learn/blob/master/notes/intro_note_05.md
 # Model both "state" and "action"
 def monte_carlo_es(episodes):
@@ -250,7 +251,9 @@ def monte_carlo_es(episodes):
     # play for several episodes
     for episode in tqdm(range(episodes)):
         # print(episode)
+        ###############################################################
         # for each episode, use a randomly initialized state and action
+        ###############################################################
         initial_state = [bool(np.random.choice([0, 1])),
                          np.random.choice(range(12, 22)),
                          np.random.choice(range(1, 11))]
