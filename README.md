@@ -14,8 +14,8 @@
     * Dynamic programming algorithms solve MDP as planning problems. 
     * Need to know entire env, can start at any state and learn next state.
     * Given a MDP, find an optimal policy for the agent to follow. It contains two main steps:
-    * a. Break the problem into subproblems and solve it
-    * b. Find overall optimal solution to the problem at hand
+        a) Break the problem into subproblems and solve it
+        b) Find overall optimal solution to the problem at hand
     * Usually contains 1) policy iteration 2) value iteration
     
 #### 1.3 Monte Carlo, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter05/blackjack.py), [tutorial](https://oneraynyday.github.io/ml/2018/05/24/Reinforcement-Learning-Monte-Carlo/)    
@@ -33,16 +33,20 @@
     * On-Policy v.s. Off-Policy Learning:
         On-Policy TD can learn the value of the policy that is used to make decisions. 
     * Off-Policy TD can learn different policies for behaviour and estimation. 
-      Behaviour policy is usually "soft" so there is sufficient exploration going on.
+        Behaviour policy is usually "soft" so there is sufficient exploration going on.
     * TD(0) - learn state-value function v(s)
     # Sarsa(On-policy) - learn an action-value function q(a,s)
     # Q-learning(Off-policy) - learn action-value regardless of selected action
     # Act-critic - critic is mearsuing V(s), actor is an independent policy. Use actor to choose action, and use TD to update critic. 
     
-#### 3. Modeling environment, [ref](https://github.com/awjuliani/DeepRL-Agents/blob/master/Model-Network.ipynb), [tutorial](https://medium.com/@awjuliani/simple-reinforcement-learning-with-tensorflow-part-3-model-based-rl-9a6fe0cce99)
-    * Add separate network to model physical environment
-    * Use policy gradients to adjust NN's weights through gradient descent
-    * Re-written in Pytorch 1.2
+#### 3. Policy Gradient 
+    * Previous methods select actions based on estimated action values.
+    * Here we learn a parameterized policy that can select actions without consulting a value function.
+    nn 
+      a) Add separate network to model physical environment
+      b) Use policy gradients to adjust NN's weights through gradient descent
+    REINFORCE
+
     
 #### 4. Q-learning
     * Dyna-Q

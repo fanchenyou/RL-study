@@ -8,7 +8,9 @@
 
 # Book http://incompleteideas.net/book/bookdraft2017nov5.pdf  Section 8.2
 # https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter08/maze.py
-
+# The planning method is the random-sample one-step tabular Q-planning
+# The direct RL method is one-step tabular Q-learning.
+# The model-learning method is also table-based and assumes the environment is deterministic.
 
 import numpy as np
 import matplotlib
@@ -52,8 +54,6 @@ class PriorityQueue:
 
 
 # A wrapper class for a maze, containing all the information about the maze.
-# Basically it's initialized to DynaMaze by default, however it can be easily adapted
-# to other maze
 class Maze:
     def __init__(self):
         # maze width
@@ -181,6 +181,9 @@ def choose_action(state, q_value, maze, dyna_params):
 
 
 # Trivial model for planning in Dyna-Q
+# this models the env, Model(S, A) <- R, S0 (assuming deterministic environment)
+# If the model is queried with a state-action pair that has been experienced before,
+# it simply returns the last-observed next state and next reward as its prediction.
 class TrivialModel:
     # @rand: an instance of np.random.RandomState for sampling
     def __init__(self, rand=np.random):
@@ -418,7 +421,7 @@ def figure_8_2():
     planning_steps = [0, 5, 50]
     steps = np.zeros((len(planning_steps), episodes))
 
-    for run in tqdm(range(runs)):
+    for _ in tqdm(range(runs)):
         for i, planning_step in enumerate(planning_steps):
             dyna_params.planning_steps = planning_step
             q_value = np.zeros(dyna_maze.q_size)
