@@ -31,9 +31,9 @@
     * Unlike MC, TD estimates the final reward at each state and the state-action value updates for every step. 
     * TD is a combination of DP and MC.
     * On-Policy v.s. Off-Policy Learning:
-    * On-Policy TD can learn the value of the policy that is used to make decisions. 
+        On-Policy TD can learn the value of the policy that is used to make decisions. 
     * Off-Policy TD can learn different policies for behaviour and estimation. 
-    * Behaviour policy is usually "soft" so there is sufficient exploration going on.
+      Behaviour policy is usually "soft" so there is sufficient exploration going on.
     * TD(0) - learn state-value function v(s)
     # Sarsa(On-policy) - learn an action-value function q(a,s)
     # Q-learning(Off-policy) - learn action-value regardless of selected action
@@ -46,11 +46,11 @@
     
 #### 4. Q-learning
     * Dyna-Q
-    *   a) Integrating planning, acting, and learning
+        a) Integrating planning, acting, and learning
     * DQN
-    *   a) Use separate networks for 1) updating weights and 2) generate current decisions
-    *   b) Use replay memory to sample from so that the training process is stable
-    *   c) Use epsilon-greedy to sample actions from predicted distribution
+        a) Use separate networks for 1) updating weights and 2) generate current decisions
+        b) Use replay memory to sample from so that the training process is stable
+        c) Use epsilon-greedy to sample actions from predicted distribution
 
 #### 5. A2C, [ref](https://github.com/MorvanZhou/PyTorch-Tutorial/blob/master/tutorial-contents/405_DQN_Reinforcement_learning.py), [tutorial](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/)
     * Advantage Actor-Critic RL
