@@ -44,11 +44,13 @@
     * Use policy gradients to adjust NN's weights through gradient descent
     * Re-written in Pytorch 1.2
     
-#### 4. DQN, [ref](https://github.com/seungeunrho/minimalRL/blob/master/a2c.py)
-    * Deep Q Network
-    * Use separate networks for 1) updating weights and 2) generate current decisions
-    * Use replay memory to sample from so that the training process is stable
-    * Use epsilon-greedy to sample actions from predicted distribution
+#### 4. Q-learning
+    * Dyna-Q
+    *   a) Integrating planning, acting, and learning
+    * DQN
+    *   a) Use separate networks for 1) updating weights and 2) generate current decisions
+    *   b) Use replay memory to sample from so that the training process is stable
+    *   c) Use epsilon-greedy to sample actions from predicted distribution
 
 #### 5. A2C, [ref](https://github.com/MorvanZhou/PyTorch-Tutorial/blob/master/tutorial-contents/405_DQN_Reinforcement_learning.py), [tutorial](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/)
     * Advantage Actor-Critic RL

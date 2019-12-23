@@ -6,7 +6,7 @@
 # declaration at the top                                              #
 #######################################################################
 
-# Book http://incompleteideas.net/book/bookdraft2017nov5.pdf  Section 8
+# Book http://incompleteideas.net/book/bookdraft2017nov5.pdf  Section 8.2
 # https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/blob/master/chapter08/maze.py
 
 
