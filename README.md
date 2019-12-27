@@ -56,17 +56,16 @@
         b) Use replay memory to sample from so that the training process is stable
         c) Use epsilon-greedy to sample actions from predicted distribution
 
-#### 5. A2C, [ref](https://github.com/MorvanZhou/PyTorch-Tutorial/blob/master/tutorial-contents/405_DQN_Reinforcement_learning.py), [tutorial](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/)
-    * Advantage Actor-Critic RL
-    * Train Actor and Critic networks
-    * Define worker function which has independent gym environment, and simulates CartPole
-    * Creates multiple processes for workers to update networks
-    
-#### 6. Continuous A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/continuous_A3C.py), [tutorial](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2)
-    * Continuous Asynchronized Actor Critic
-
-#### 7. Discrete A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/discrete_A3C.py)
-    * Discrete Asynchronized Actor Critic
+#### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [Continuous-A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2)
+    * 5.1 A2C
+        a) Advantage Actor-Critic RL
+        b) Train Actor and Critic networks
+        c) Define worker function which has independent gym environment, and simulates CartPole
+        d) Creates multiple processes for workers to update networks
+    * 5.2 Continuous A3C
+        Continuous Asynchronized Actor Critic
+    * 5.3 Discrete A3C
+        Discrete Asynchronized Actor Critic
     
 #### 8 Distributional Quantile-DQN, [C51](https://arxiv.org/pdf/1707.06887.pdf), [QR-DQN](https://arxiv.org/pdf/1710.10044.pdf), [IQN](https://arxiv.org/pdf/1806.06923.pdf)
   ![Network](/pics/iqn.png)
