@@ -68,17 +68,21 @@
 #### 7. Discrete A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/discrete_A3C.py)
     * Discrete Asynchronized Actor Critic
     
-#### 8. Quantile-DQN, [paper](https://arxiv.org/pdf/1710.10044.pdf), [ref](https://github.com/senya-ashukha/quantile-regression-dqn-pytorch)
-    * Distributional Reinforcement Learning with Quantile Regression
-    * Add NN and CNN examples
+#### 8.1 Quantile-DQN, [C51](https://arxiv.org/pdf/1707.06887.pdf), [QR-DQN](https://arxiv.org/pdf/1710.10044.pdf)
+    * C51
+    * QR-DQN
+        a) Distributional Reinforcement Learning with Quantile Regression
+        b) Add NN and CNN examples
     
-#### 9. Implicit-Quantile-DQN (IQN), [paper](https://arxiv.org/pdf/1806.06923.pdf), [ref](https://github.com/sjYoondeltar/myRL_example)
+#### 8.2 Distributional Quantile-DQN, [IQN](https://arxiv.org/pdf/1806.06923.pdf)
   ![Network](/pics/iqn.png)
-  
-    * Implicit Quantile Networks for Distributional Reinforcement Learning
-    * Add NN and CNN examples
+      
+    * Implicit-Quantile-DQN (IQN)
+        a) Implicit Quantile Networks for Distributional Reinforcement Learning
+        b) Use continuous quantile estimation to predict state distribution
+        c) Use TD to update according to p-Wasserstein distance
     
-#### 10. Deep Deterministic Policy Gradient (DDPG), [tutorial](https://spinningup.openai.com/en/latest/algorithms/ddpg.html), [ref](https://github.com/seungeunrho/minimalRL/blob/master/ddpg.py)  
+#### 9. Deep Deterministic Policy Gradient (DDPG), [tutorial](https://spinningup.openai.com/en/latest/algorithms/ddpg.html), [ref](https://github.com/seungeunrho/minimalRL/blob/master/ddpg.py)  
     * Concurrently learn a Q-function and a policy. 
     * DDPG interleaves learning an approximator to Q(s,a) with learning an approximator to a(s).
     * DDPG explores action space by noise at training time.
