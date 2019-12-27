@@ -68,16 +68,14 @@
 #### 7. Discrete A3C, [ref](https://github.com/MorvanZhou/pytorch-A3C/blob/master/discrete_A3C.py)
     * Discrete Asynchronized Actor Critic
     
-#### 8.1 Quantile-DQN, [C51](https://arxiv.org/pdf/1707.06887.pdf), [QR-DQN](https://arxiv.org/pdf/1710.10044.pdf)
-    * C51
-    * QR-DQN
+#### 8 Distributional Quantile-DQN, [C51](https://arxiv.org/pdf/1707.06887.pdf), [QR-DQN](https://arxiv.org/pdf/1710.10044.pdf), [IQN](https://arxiv.org/pdf/1806.06923.pdf)
+  ![Network](/pics/iqn.png)
+  
+    * 8.1 C51
+    * 8.2 QR-DQN
         a) Distributional Reinforcement Learning with Quantile Regression
         b) Add NN and CNN examples
-    
-#### 8.2 Distributional Quantile-DQN, [IQN](https://arxiv.org/pdf/1806.06923.pdf)
-  ![Network](/pics/iqn.png)
-      
-    * Implicit-Quantile-DQN (IQN)
+    * 8.3 Implicit-Quantile-DQN (IQN)
         a) Implicit Quantile Networks for Distributional Reinforcement Learning
         b) Use continuous quantile estimation to predict state distribution
         c) Use TD to update according to p-Wasserstein distance
