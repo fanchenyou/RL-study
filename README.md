@@ -74,7 +74,7 @@
         a) Define distributional Bellman equation which approximates value distributions.
         b) Value distribution Z_pi is a mapping from state-action pairs to distributions over returns.
         c) The distributional Bellman operator preserves multimodality in value distributions, which leads to more stable learning.
-        d) C51 first performs a heuristic projection step, followed by the minimization of a KL divergence between projected Bellman update and prediction.
+        d) Perform a heuristic projection step, followed by the minimization of a KL divergence between projected Bellman update and prediction.
         e) Fail to propose a practical distributional algorithm that operates end-to-end on the Wasserstein metric.
     * 8.2 QR-DQN
         a) Distributional reinforcement Learning with quantile regression.

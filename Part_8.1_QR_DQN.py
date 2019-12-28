@@ -11,7 +11,6 @@ MountainCar problem: https://gym.openai.com/envs/MountainCar-v0/   https://githu
 import torch
 import torch.nn as nn
 import gym
-import os
 
 import os
 import sys
@@ -23,6 +22,7 @@ from tabulate import tabulate
 from time import gmtime, strftime
 
 import matplotlib
+
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from IPython import display
@@ -171,7 +171,9 @@ if __name__ == "__main__":
             memory.push(state, action, next_state, reward, float(done))
             sum_reward += reward
 
-            if len(memory) < batch_size: break
+            if len(memory) < batch_size:
+                break
+
             states, actions, rewards, next_states, dones = memory.sample(batch_size)
 
             # q_val of current states

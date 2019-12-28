@@ -29,6 +29,8 @@ This code shows
 
 """
 
+import os
+import math
 import torch
 import torch.nn as nn
 from utils.utils import v_wrap, set_init, push_and_pull, record
@@ -36,7 +38,6 @@ import torch.nn.functional as F
 import torch.multiprocessing as mp
 from utils.shared_adam import SharedAdam
 import gym
-import math, os
 import matplotlib.pyplot as plt
 
 os.environ["OMP_NUM_THREADS"] = "1"
