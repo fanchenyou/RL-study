@@ -56,7 +56,7 @@
         b) Use replay memory to sample from so that the training process is stable
         c) Use epsilon-greedy to sample actions from predicted distribution
 
-#### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [Continuous-A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2)
+#### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2)
     * 5.1 A2C
         a) Advantage Actor-Critic RL
         b) Train Actor and Critic networks
@@ -71,6 +71,9 @@
   ![Network](/pics/iqn.png)
   
     * 8.1 C51
+        a) Define distributional Bellman equation which approximates value distributions.
+        b) Value distribution Z_pi is a mapping from state-action pairs to distributions over returns.
+        c) The distributional Bellman operator preserves multimodality in value distributions, which leads to more stable learning.
     * 8.2 QR-DQN
         a) Distributional Reinforcement Learning with Quantile Regression
         b) Add NN and CNN examples

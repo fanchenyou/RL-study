@@ -2,7 +2,7 @@
 # Implementation of C51
 # Author for codes: Chu Kun(chukun1997@163.com)
 # Paper: https://arxiv.org/abs/1707.06887v1
-# Reference: https://github.com/sungyubkim/Deep_RL_with_pytorch
+# Reference: https://github.com/sungyubkim/Deep_RL_with_pytorch/blob/master/6_Uncertainty_in_RL/6_1_C51_ver_A.ipynb
 ###########################################################################################
 import gym
 import torch
@@ -77,15 +77,14 @@ LOAD = False
 # save frequency
 SAVE_FREQ = int(1e+3)
 # paths for predction net, target net, result log
-PRED_PATH = './data/model/C51_pred_net_' + args.games + '.pkl'
-TARGET_PATH = './data/model/C51_target_net_' + args.games + '.pkl'
-RESULT_PATH = './data/plots/C51_result_' + args.games + '.pkl'
+PRED_PATH = './tmp/model/C51_pred_net_' + args.games + '.pkl'
+TARGET_PATH = './tmp/model/C51_target_net_' + args.games + '.pkl'
+RESULT_PATH = './tmp/plots/C51_result_' + args.games + '.pkl'
 
 
 class ConvNet(nn.Module):
     def __init__(self):
         super(ConvNet, self).__init__()
-
         self.feature_extraction = nn.Sequential(
             nn.Conv2d(STATE_LEN, 32, kernel_size=8, stride=4),
             nn.ReLU(),
@@ -232,7 +231,7 @@ class DQN(object):
         # we vectorized the computation of support and position
         next_v_range = np.expand_dims(b_r, 1) + GAMMA * np.expand_dims((1. - b_d), 1) \
                        * np.expand_dims(self.value_range.data.cpu().numpy(), 0)
-        next_v_pos = np.zeros_like(next_v_range)
+        # next_v_pos = np.zeros_like(next_v_range)
         # clip for categorical distribution
         next_v_range = np.clip(next_v_range, V_MIN, V_MAX)
         # calc relative position of possible value
