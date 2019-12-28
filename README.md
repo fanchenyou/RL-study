@@ -74,9 +74,13 @@
         a) Define distributional Bellman equation which approximates value distributions.
         b) Value distribution Z_pi is a mapping from state-action pairs to distributions over returns.
         c) The distributional Bellman operator preserves multimodality in value distributions, which leads to more stable learning.
+        d) C51 first performs a heuristic projection step, followed by the minimization of a KL divergence between projected Bellman update and prediction.
+        e) Fail to propose a practical distributional algorithm that operates end-to-end on the Wasserstein metric.
     * 8.2 QR-DQN
-        a) Distributional Reinforcement Learning with Quantile Regression
-        b) Add NN and CNN examples
+        a) Distributional reinforcement Learning with quantile regression.
+        b) By using quantile regression (Koenker 2005), there exists an algorithm  which can perform distributional RL over the Wasserstein metric.
+        c) Assign fixed uniform probabilities to N adjustable locations.
+        d) Stochastically adjust the distributions’ locations so as to minimize the Wasserstein distance to a target distribution.
     * 8.3 Implicit-Quantile-DQN (IQN)
         a) Implicit Quantile Networks for Distributional Reinforcement Learning
         b) Use continuous quantile estimation to predict state distribution
