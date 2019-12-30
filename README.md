@@ -39,16 +39,8 @@
     # Q-learning(Off-policy) - learn action-value regardless of selected action
     # Act-critic - critic is mearsuing V(s), actor is an independent policy. Use actor to choose action, and use TD to update critic. 
     
-#### 3. Policy Gradient 
-    * Previous methods select actions based on estimated action values.
-    * Here we learn a parameterized policy that can select actions without consulting a value function.
-    nn 
-      a) Add separate network to model physical environment
-      b) Use policy gradients to adjust NN's weights through gradient descent
-    REINFORCE
-
     
-#### 4. Q-learning
+#### 3. Q-learning
     * Dyna-Q
         a) Integrating planning, acting, and learning
     * DQN
@@ -56,6 +48,14 @@
         b) Use replay memory to sample from so that the training process is stable
         c) Use epsilon-greedy to sample actions from predicted distribution
 
+#### 4. Policy Gradient 
+    * Previous methods select actions based on estimated action values.
+    * Here we learn a parameterized policy that can select actions without consulting a value function.
+    nn 
+      a) Add separate network to model physical environment
+      b) Use policy gradients to adjust NN's weights through gradient descent
+    REINFORCE
+    
 #### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2),  [PPO](https://arxiv.org/pdf/1707.06347.pdf)
     Policy gradient method
     * 5.1 A2C
