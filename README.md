@@ -56,7 +56,8 @@
         b) Use replay memory to sample from so that the training process is stable
         c) Use epsilon-greedy to sample actions from predicted distribution
 
-#### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2)
+#### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2),  [PPO](https://arxiv.org/pdf/1707.06347.pdf)
+    Policy gradient method
     * 5.1 A2C
         a) Advantage Actor-Critic RL
         b) Train Actor and Critic networks
@@ -66,7 +67,9 @@
         Continuous Asynchronized Actor Critic
     * 5.3 Discrete A3C
         Discrete Asynchronized Actor Critic
-    
+    * 5.4 Proximal Policy Optimization (PPO)
+        
+
 #### 8 Distributional Quantile-DQN, [C51](https://arxiv.org/pdf/1707.06887.pdf), [QR-DQN](https://arxiv.org/pdf/1710.10044.pdf), [IQN](https://arxiv.org/pdf/1806.06923.pdf)
   ![Network](/pics/iqn.png)
   

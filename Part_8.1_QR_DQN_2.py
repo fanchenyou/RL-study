@@ -107,7 +107,7 @@ if __name__ == "__main__":
         dist_target = reward.unsqueeze(1) + 0.99 * next_dist * (1 - done.unsqueeze(1))
 
         quant_idx = torch.sort(dist, 1, descending=False)[1]
-        tau_hat = torch.linspace(0.0, 1.0 - 1. / num_quant, num_quant) + 0.5 / num_quant
+        tau_hat = torch.linspace(0.0, 1.0 - 1. / num_quant, num_quant) + 0.5 / num_quant  # Lemma2
         tau_hat = tau_hat.unsqueeze(0).repeat(batch_size, 1)
         quant_idx = quant_idx.cpu().data
         batch_idx = np.arange(batch_size)
