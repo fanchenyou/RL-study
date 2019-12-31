@@ -47,14 +47,19 @@
         a) Use separate networks for 1) updating weights and 2) generate current decisions
         b) Use replay memory to sample from so that the training process is stable
         c) Use epsilon-greedy to sample actions from predicted distribution
+        d) DDPG is DQN + policy learning
 
-#### 4. Policy Gradient 
+#### 4. Policy Gradient, [DDPG](https://arxiv.org/pdf/1509.02971.pdf)
     * Previous methods select actions based on estimated action values.
     * Here we learn a parameterized policy that can select actions without consulting a value function.
-    nn 
-      a) Add separate network to model physical environment
-      b) Use policy gradients to adjust NN's weights through gradient descent
-    REINFORCE
+    * 4.1 Standard PG
+    * 4.2 REINFORCE
+    * 4.3 Deep Deterministic Policy Gradient (DDPG)
+        a) DDPG is an off-policy algorithm, which is used for environments with continuous action spaces.
+        b) Concurrently learn a Q-function and a policy, which can be thought of deep Q-learning for continuous action spaces.
+        c) DDPG interleaves learning an approximator to Q(s,a) with learning an approximator to a(s).
+        d) For Q-learning side, it minimizes MSE of target Q and pred Q.
+        e) For policy gradient side, it learns a deterministic policy which gives the action that maximizes Q by gradient ascent.
     
 #### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2),  [PPO](https://arxiv.org/pdf/1707.06347.pdf)
     Policy gradient method
@@ -89,7 +94,3 @@
         b) Use continuous quantile estimation to predict state distribution
         c) Use TD to update according to p-Wasserstein distance
     
-#### 9. Deep Deterministic Policy Gradient (DDPG), [tutorial](https://spinningup.openai.com/en/latest/algorithms/ddpg.html), [ref](https://github.com/seungeunrho/minimalRL/blob/master/ddpg.py)  
-    * Concurrently learn a Q-function and a policy. 
-    * DDPG interleaves learning an approximator to Q(s,a) with learning an approximator to a(s).
-    * DDPG explores action space by noise at training time.

@@ -1,4 +1,5 @@
 '''
+See tutorial for very clear explanation
 tutorial https://spinningup.openai.com/en/latest/algorithms/ddpg.html
 code ref https://github.com/ghliu/pytorch-ddpg
 
@@ -51,6 +52,7 @@ class ReplayBuffer():
         return len(self.buffer)
 
 
+# Policy network
 class MuNet(nn.Module):
     def __init__(self):
         super(MuNet, self).__init__()
@@ -64,7 +66,7 @@ class MuNet(nn.Module):
         mu = torch.tanh(self.fc_mu(x)) * 2  # Multipled by 2 because the action space of the Pendulum-v0 is [-2,2]
         return mu
 
-
+# Value network
 class QNet(nn.Module):
     def __init__(self):
         super(QNet, self).__init__()
@@ -105,7 +107,7 @@ def train(mu, mu_target, q, q_target, memory, q_optimizer, mu_optimizer):
     q_loss.backward()
     q_optimizer.step()
 
-    mu_loss = -q(s, mu(s)).mean()  # That's all for the policy loss.
+    mu_loss = -q(s, mu(s)).mean()  # That's all for the policy loss, gradient ascent.
     mu_optimizer.zero_grad()
     mu_loss.backward()
     mu_optimizer.step()

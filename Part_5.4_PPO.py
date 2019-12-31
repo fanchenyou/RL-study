@@ -112,6 +112,7 @@ class PPO:
         old_logprobs = torch.stack(memory.logprobs).to(device).detach()
 
         # Optimize policy for K epochs:
+
         for _ in range(self.K_epochs):
             # Evaluating old actions and values :
             logprobs, state_values, dist_entropy = self.policy.evaluate(old_states, old_actions)
@@ -175,7 +176,8 @@ def main():
         for t in range(max_timesteps):
             timestep += 1
 
-            # Running policy_old:
+            # Running policy_old
+            # fill intermedia steps to memory
             action = ppo.policy_old.act(state, memory)
             state, reward, done, _ = env.step(action)
 
