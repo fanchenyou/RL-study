@@ -49,17 +49,21 @@
         c) Use epsilon-greedy to sample actions from predicted distribution
         d) DDPG is DQN + policy learning
 
-#### 4. Policy Gradient, [DDPG](https://arxiv.org/pdf/1509.02971.pdf)
+#### 4. Policy Gradient, [DDPG](https://arxiv.org/pdf/1509.02971.pdf), [TD3](https://spinningup.openai.com/en/latest/algorithms/td3.html)
     * Previous methods select actions based on estimated action values.
     * Here we learn a parameterized policy that can select actions without consulting a value function.
     * 4.1 Standard PG
     * 4.2 REINFORCE
-    * 4.3 Deep Deterministic Policy Gradient (DDPG)
+    * 4.3 Deep Deterministic Policy Gradient (DDPG), see 5.5
         a) DDPG is an off-policy algorithm, which is used for environments with continuous action spaces.
         b) Concurrently learn a Q-function and a policy, which can be thought of deep Q-learning for continuous action spaces.
         c) DDPG interleaves learning an approximator to Q(s,a) with learning an approximator to a(s).
         d) For Q-learning side, it minimizes MSE of target Q and pred Q.
         e) For policy gradient side, it learns a deterministic policy which gives the action that maximizes Q by gradient ascent.
+     * 4.4 Twin Delayed DDPG (TD3), see 5.6
+         a) TD3 learns two Q-functions and uses the smaller of the two Q-values to form the targets in the Bellman error loss functions.
+         b) Delayed Policy Updates. TD3 updates the policy (and target networks) less frequently than the Q-function.
+         c) Target Policy Smoothing. TD3 adds noise to the target action, to make it harder for the policy to exploit Q-function errors by smoothing out Q along changes in action.
     
 #### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2),  [PPO](https://arxiv.org/pdf/1707.06347.pdf)
     Policy gradient method
@@ -73,7 +77,9 @@
     * 5.3 Discrete A3C
         Discrete Asynchronized Actor Critic
     * 5.4 Proximal Policy Optimization (PPO)
-        
+    * 5.5 DDPG with AC formulation (see 4.3), with Q-leearning (value) + Actor-Critic (policy) learning
+    * 5.6 TD3 with AC formulation (see 4.4), with Q-learning (value) + Actor-Critic (policy) learning
+    
 
 #### 8 Distributional Quantile-DQN, [C51](https://arxiv.org/pdf/1707.06887.pdf), [QR-DQN](https://arxiv.org/pdf/1710.10044.pdf), [IQN](https://arxiv.org/pdf/1806.06923.pdf)
   ![Network](/pics/iqn.png)
