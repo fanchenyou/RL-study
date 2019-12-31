@@ -1,6 +1,6 @@
 '''
-tutorial https://zhuanlan.zhihu.com/p/82494810
-code ref https://spinningup.openai.com/en/latest/algorithms/ddpg.html https://spinningup.openai.com/en/latest/algorithms/td3.html
+tutorial https://spinningup.openai.com/en/latest/algorithms/ddpg.html https://spinningup.openai.com/en/latest/algorithms/td3.html
+code ref https://github.com/sfujim/TD3/blob/master/DDPG.py
 '''
 
 import os
