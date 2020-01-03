@@ -65,7 +65,7 @@
          b) Delayed Policy Updates. TD3 updates the policy (and target networks) less frequently than the Q-function.
          c) Target Policy Smoothing. TD3 adds noise to the target action, to make it harder for the policy to exploit Q-function errors by smoothing out Q along changes in action.
     
-#### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2),  [PPO](https://arxiv.org/pdf/1707.06347.pdf)
+#### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2),  [PPO](https://arxiv.org/pdf/1707.06347.pdf), [SAC](https://arxiv.org/pdf/1812.05905.pdf)
     Policy gradient method
     * 5.1 A2C
         a) Advantage Actor-Critic RL
@@ -79,6 +79,10 @@
     * 5.4 Proximal Policy Optimization (PPO)
     * 5.5 DDPG with AC formulation (see 4.3), with Q-leearning (value) + Actor-Critic (policy) learning
     * 5.6 TD3 with AC formulation (see 4.4), with Q-learning (value) + Actor-Critic (policy) learning
+    * 5.7 Soft AC (SAC)
+        a) off-policy maximum entropy
+        b) successor of Soft Q-Learning and incorporates the double Q-learning trick similar as TD3. 
+        c) maximize a trade-off between expected return and entropy, a measure of randomness in the policy
     
 
 #### 8 Distributional Quantile-DQN, [C51](https://arxiv.org/pdf/1707.06887.pdf), [QR-DQN](https://arxiv.org/pdf/1710.10044.pdf), [IQN](https://arxiv.org/pdf/1806.06923.pdf)
