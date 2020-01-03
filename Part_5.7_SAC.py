@@ -64,23 +64,8 @@ def weights_init_(m):
         torch.nn.init.constant_(m.bias, 0)
 
 
-class ValueNetwork(nn.Module):
-    def __init__(self, num_inputs, hidden_dim):
-        super(ValueNetwork, self).__init__()
 
-        self.linear1 = nn.Linear(num_inputs, hidden_dim)
-        self.linear2 = nn.Linear(hidden_dim, hidden_dim)
-        self.linear3 = nn.Linear(hidden_dim, 1)
-
-        self.apply(weights_init_)
-
-    def forward(self, state):
-        x = F.relu(self.linear1(state))
-        x = F.relu(self.linear2(x))
-        x = self.linear3(x)
-        return x
-
-
+# Critic - Double Q network
 class QNetwork(nn.Module):
     def __init__(self, num_inputs, num_actions, hidden_dim):
         super(QNetwork, self).__init__()
@@ -111,6 +96,7 @@ class QNetwork(nn.Module):
         return x1, x2
 
 
+# Actor
 class GaussianPolicy(nn.Module):
     def __init__(self, num_inputs, num_actions, hidden_dim, action_space=None):
         super(GaussianPolicy, self).__init__()
@@ -159,6 +145,7 @@ class GaussianPolicy(nn.Module):
         return super(GaussianPolicy, self).to(device)
 
 
+# Actor
 class DeterministicPolicy(nn.Module):
     def __init__(self, num_inputs, num_actions, hidden_dim, action_space=None):
         super(DeterministicPolicy, self).__init__()
@@ -198,6 +185,8 @@ class DeterministicPolicy(nn.Module):
         return super(DeterministicPolicy, self).to(device)
 
 
+# Policy
+# learn to maximize the expected future return plus expected future entropy
 class SAC(object):
     def __init__(self, num_inputs, action_space, args):
 
@@ -259,18 +248,25 @@ class SAC(object):
             min_qf_next_target = torch.min(qf1_next_target, qf2_next_target) - self.alpha * next_state_log_pi
             next_q_value = reward_batch + mask_batch * self.gamma * (min_qf_next_target)
 
+        # double-Q like TD3
         qf1, qf2 = self.critic(state_batch,
                                action_batch)  # Two Q-functions to mitigate positive bias in the policy improvement step
         qf1_loss = F.mse_loss(qf1, next_q_value)  # JQ = 𝔼(st,at)~D[0.5(Q1(st,at) - r(st,at) - γ(𝔼st+1~p[V(st+1)]))^2]
         qf2_loss = F.mse_loss(qf2, next_q_value)  # JQ = 𝔼(st,at)~D[0.5(Q1(st,at) - r(st,at) - γ(𝔼st+1~p[V(st+1)]))^2]
 
+        # entropy term log_pi is sanpled from the policy
+        # https://spinningup.openai.com/en/latest/algorithms/sac.html
         pi, log_pi, _ = self.policy.sample(state_batch)
 
         qf1_pi, qf2_pi = self.critic(state_batch, pi)
         min_qf_pi = torch.min(qf1_pi, qf2_pi)
 
+        # L = (V - (min(Q1,Q2) - alpha*log(pi)))^2
         policy_loss = ((self.alpha * log_pi) - min_qf_pi).mean()
 
+        ############################
+        # learn critic (=Q)
+        ############################
         self.critic_optim.zero_grad()
         qf1_loss.backward()
         self.critic_optim.step()
@@ -279,9 +275,13 @@ class SAC(object):
         qf2_loss.backward()
         self.critic_optim.step()
 
+        ############################
+        # policy update learn actor
+        ############################
         self.policy_optim.zero_grad()
         policy_loss.backward()
         self.policy_optim.step()
+
 
         if self.automatic_entropy_tuning:
             alpha_loss = -(self.log_alpha * (log_pi + self.target_entropy).detach()).mean()

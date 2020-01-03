@@ -83,7 +83,7 @@
         a) off-policy maximum entropy
         b) successor of Soft Q-Learning and incorporates the double Q-learning trick similar as TD3. 
         c) maximize a trade-off between expected return and entropy, a measure of randomness in the policy
-    
+        d) policy is parameterized as a neural network
 
 #### 8 Distributional Quantile-DQN, [C51](https://arxiv.org/pdf/1707.06887.pdf), [QR-DQN](https://arxiv.org/pdf/1710.10044.pdf), [IQN](https://arxiv.org/pdf/1806.06923.pdf)
   ![Network](/pics/iqn.png)
