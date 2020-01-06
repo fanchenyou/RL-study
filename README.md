@@ -40,14 +40,16 @@
     # Act-critic - critic is mearsuing V(s), actor is an independent policy. Use actor to choose action, and use TD to update critic. 
     
     
-#### 3. Q-learning
-    * Dyna-Q
+#### 3. Q-learning, [Double-Q](https://arxiv.org/abs/1509.06461), [Dueling-Q](https://arxiv.org/abs/1511.06581)
+    * 3.1 Dyna-Q
         a) Integrating planning, acting, and learning
-    * DQN
+    * 3.2 DQN
         a) Use separate networks for 1) updating weights and 2) generate current decisions
         b) Use replay memory to sample from so that the training process is stable
         c) Use epsilon-greedy to sample actions from predicted distribution
         d) DDPG is DQN + policy learning
+    * 3.3 Double DQN
+    * 3.4 Dueling DQN
 
 #### 4. Policy Gradient, [DDPG](https://arxiv.org/pdf/1509.02971.pdf), [TD3](https://spinningup.openai.com/en/latest/algorithms/td3.html)
     * Previous methods select actions based on estimated action values.
@@ -77,13 +79,15 @@
     * 5.3 Discrete A3C
         Discrete Asynchronized Actor Critic
     * 5.4 Proximal Policy Optimization (PPO)
-    * 5.5 DDPG with AC formulation (see 4.3), with Q-leearning (value) + Actor-Critic (policy) learning
+    * 5.5 DDPG with AC formulation (see 4.3), with Q-learning (value) + Actor-Critic (policy) learning
     * 5.6 TD3 with AC formulation (see 4.4), with Q-learning (value) + Actor-Critic (policy) learning
+        a) TD3 trains a deterministic policy in an off-policy way. 
+        b) To explore, add noise to actions at training time, typically uncorrelated mean-zero Gaussian noise. 
     * 5.7 Soft AC (SAC)
-        a) off-policy maximum entropy
-        b) successor of Soft Q-Learning and incorporates the double Q-learning trick similar as TD3. 
-        c) maximize a trade-off between expected return and entropy, a measure of randomness in the policy
-        d) policy is parameterized as a neural network
+        a) SAC trains a stochastic policy with entropy regularization, and explores in an on-policy way.
+        b) At test time, use the mean action instead of a sample from the distribution.
+        c) Use the double Q-learning trick similar as TD3. 
+        d) Maximize a trade-off between expected return and entropy, a measure of randomness in the policy
 
 #### 8 Distributional Quantile-DQN, [C51](https://arxiv.org/pdf/1707.06887.pdf), [QR-DQN](https://arxiv.org/pdf/1710.10044.pdf), [IQN](https://arxiv.org/pdf/1806.06923.pdf)
   ![Network](/pics/iqn.png)
