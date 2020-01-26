@@ -1,29 +1,24 @@
 import torch
 import torch.nn as nn
 
+# ref to paper https://arxiv.org/abs/1904.10554
+# this network estimates nash function params mu, Phi, Psi
+# of the specified advantage function
 class PermInvariantQNN(torch.nn.Module):
     """
     Permutation Invariant Network
     
     :param in_invar_dim:   Number of total features across all agents that needs to be perm invariant 
     :param non_invar_dim:  Number of total features constant across all agents
-    :param out_dim:        Dimension of output
+    :param out_dim:        Dimension of output, see section 6.2
     :param block_size:     Number of invariant features of each agent
     :param num_moments:    Number of features/moments to summarize invariant features of each agent
     :raises assertError:   Raise assertion error if in_invar_dim not multiple of block size
     """
-    
-    # block_size: int
-    # in_invar_dim: int
-    # non_invar_dim: int
-    # num_moments: int
-    # out_dim: int
 
-    def __init__(self, in_invar_dim, non_invar_dim,
-                 out_dim, block_size=1, num_moments=1):
+    def __init__(self, in_invar_dim, non_invar_dim, out_dim, block_size=1, num_moments=1):
         super(PermInvariantQNN, self).__init__()
 
-        # Store input and output dimensions
         self.in_invar_dim = in_invar_dim
         self.non_invar_dim = non_invar_dim
         self.block_size = block_size
@@ -43,7 +38,7 @@ class PermInvariantQNN(torch.nn.Module):
             nn.Linear(20, 20),
             nn.LeakyReLU(),
             nn.Linear(20, self.num_moments),
-            #nn.BatchNorm1d(self.num_moments)
+            # nn.BatchNorm1d(self.num_moments)
         )
 
         self.decoder_net = nn.Sequential(

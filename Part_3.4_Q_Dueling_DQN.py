@@ -84,6 +84,7 @@ class DuelingDQN(nn.Module):
         return action
 
 
+## idea from Double DQN, see section 2.2
 current_model = DuelingDQN(env.observation_space.shape[0], env.action_space.n)
 target_model = DuelingDQN(env.observation_space.shape[0], env.action_space.n)
 

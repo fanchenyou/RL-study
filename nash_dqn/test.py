@@ -5,7 +5,7 @@ matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
 from NashRL import *
-from nashRL_netlib import *
+from model import *
 from NashAgent_lib import *
 from textwrap import wrap
 from visualization import *

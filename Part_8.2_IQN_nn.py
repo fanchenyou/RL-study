@@ -9,7 +9,6 @@ https://github.com/sungyubkim/Deep_RL_with_pytorch/blob/master/6_Uncertainty_in_
 '''
 
 import os
-import sys
 import gym
 import torch
 import torch.nn as nn
@@ -17,18 +16,14 @@ import torch.nn.functional as F
 
 import numpy as np
 import random
-
-import pickle
-import time
-from collections import deque, OrderedDict
-from time import gmtime, strftime
-import tabulate
+from collections import deque
 
 import matplotlib
 
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import seaborn as sns
+from IPython import display
 
 sns.set()
 
@@ -65,7 +60,7 @@ RENDERING = False
 
 '''Training settings'''
 # mini-batch size
-BATCH_SIZE = 128
+BATCH_SIZE = 16
 # learning rage
 LR = 1e-4
 # epsilon-greedy
@@ -83,17 +78,16 @@ TARGET_PATH = './tmp/model/iqn_target_net.pkl'
 RESULT_PATH = './tmp/plots/result.pkl'
 
 
+
 class ReplayMemory:
     def __init__(self, capacity):
-        self.capacity = capacity
-        self.memory = []
+        self.memory = deque(maxlen=capacity)
 
     def push(self, state, action, next_state, reward, done):
         transition = torch.Tensor([state]), torch.Tensor([action]), torch.Tensor([next_state]), \
                      torch.Tensor([reward]), torch.Tensor([done])
         self.memory.append(transition)
-        if len(self.memory) > self.capacity:
-            del self.memory[0]
+
 
     def sample(self, batch_size):
         sample = random.sample(self.memory, batch_size)

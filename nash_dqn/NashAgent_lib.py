@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
-from nashRL_netlib import *
+from model import PermInvariantQNN
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -28,7 +28,7 @@ class NashFittedValues(object):
 # Class containing all functions related to nash agent, including loss functions,
 # and prediction functions
 # --------------------
-class NashNN():
+class NashNN:
     """
     Object summarizing estimated parameters of the advantage function, initiated 
     through a vector of inputs

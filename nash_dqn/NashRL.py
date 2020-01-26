@@ -2,7 +2,7 @@ import numpy as np
 import torch
 
 from simulation_lib import *
-from nashRL_netlib import *
+from model import *
 from NashAgent_lib import *
 
 # -------------------------------------------------------------------
