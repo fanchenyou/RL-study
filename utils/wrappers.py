@@ -7,7 +7,7 @@ from gym import spaces
 import cv2
 from abc import ABCMeta, abstractmethod
 from multiprocessing import Process, Pipe
-from monitor import Monitor
+from .monitor import Monitor
 
 
 class EpisodicLifeEnv(gym.Wrapper):

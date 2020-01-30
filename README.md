@@ -108,3 +108,8 @@
         b) Use continuous quantile estimation to predict state distribution
         c) Use TD to update according to p-Wasserstein distance
     * 8.4 Fully parameterized Quantile Function (FQF)
+    
+#### Installation
+    Install full gym (and mujuco).
+    Please refer to this detailed article
+    https://lutein.github.io/2018/03/03/RL-install-md/
