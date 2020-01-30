@@ -89,7 +89,7 @@
         c) Use the double Q-learning trick similar as TD3. 
         d) Maximize a trade-off between expected return and entropy, a measure of randomness in the policy
 
-#### 8 Distributional Quantile-DQN, [C51](https://arxiv.org/pdf/1707.06887.pdf), [QR-DQN](https://arxiv.org/pdf/1710.10044.pdf), [IQN](https://arxiv.org/pdf/1806.06923.pdf)
+#### 8 Distributional Quantile-DQN, [C51](https://arxiv.org/pdf/1707.06887.pdf), [QR-DQN](https://arxiv.org/pdf/1710.10044.pdf), [IQN](https://arxiv.org/pdf/1806.06923.pdf), [FQF](https://arxiv.org/abs/1911.02140)
   ![Network](/pics/iqn.png)
   
     * 8.1 C51
@@ -107,4 +107,4 @@
         a) Implicit Quantile Networks for Distributional Reinforcement Learning
         b) Use continuous quantile estimation to predict state distribution
         c) Use TD to update according to p-Wasserstein distance
-    
+    * 8.4 Fully parameterized Quantile Function (FQF)
