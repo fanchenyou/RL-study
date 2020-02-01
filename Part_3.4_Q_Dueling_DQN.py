@@ -8,8 +8,8 @@ import numpy as np
 import gym
 import math
 import random
-import matplotlib
-matplotlib.use('TkAgg')
+# import matplotlib
+# matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from collections import deque
 

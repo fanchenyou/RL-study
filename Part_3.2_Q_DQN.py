@@ -107,7 +107,7 @@ print('\nCollecting experience...')
 for i_episode in range(400):
     s = env.reset()
     ep_r = 0
-    print 'Episode ', i_episode,
+    print('Episode ', i_episode)
 
     cnt = 0
     while True:
@@ -136,7 +136,7 @@ for i_episode in range(400):
                       '| Ep_r: ', round(ep_r, 2))
 
         if done:
-            print ' steps ', cnt
+            print(' steps ', cnt)
             break
         s = s_
         cnt += 1

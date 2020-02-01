@@ -7,7 +7,6 @@ code https://github.com/pranz24/pytorch-soft-actor-critic
 """
 
 import os
-import math
 import random
 import gym
 import torch

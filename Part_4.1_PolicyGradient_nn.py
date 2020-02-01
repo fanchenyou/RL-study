@@ -24,7 +24,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
-
 import gym
 
 env = gym.make('CartPole-v0')
@@ -113,7 +112,7 @@ def discount_rewards(r):
     """ take 1D float array of rewards and compute discounted reward """
     discounted_r = np.zeros_like(r)
     running_add = 0
-    for t in reversed(xrange(0, r.size)):
+    for t in reversed(range(0, r.size)):
         running_add = running_add * gamma + r[t]
         discounted_r[t] = running_add
     return discounted_r
@@ -166,9 +165,9 @@ for name, param in policy_net.named_parameters():
     if param.requires_grad:
         gradBuffer[name] = torch.zeros_like(param)
 
-print "================================================================"
-print "Gradbuffer contains params from policy and environment networks"
-print gradBuffer.keys()
+print("================================================================")
+print("Gradbuffer contains params from policy and environment networks")
+print(gradBuffer.keys())
 print
 
 while episode_number <= 500:
