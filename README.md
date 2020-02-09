@@ -67,9 +67,9 @@
         d) For Q-learning side, it minimizes MSE of target Q and pred Q.
         e) For policy gradient side, it learns a deterministic policy which gives the action that maximizes Q by gradient ascent.
      * 4.3 Twin Delayed DDPG (TD3), see 5.6
-         a) TD3 learns two Q-functions and uses the smaller of the two Q-values to form the targets in the Bellman error loss functions.
-         b) Delayed Policy Updates. TD3 updates the policy (and target networks) less frequently than the Q-function.
-         c) Target Policy Smoothing. TD3 adds noise to the target action, to make it harder for the policy to exploit Q-function errors by smoothing out Q along changes in action.
+        a) TD3 learns two Q-functions and uses the smaller of the two Q-values to form the targets in the Bellman error loss functions.
+        b) Delayed Policy Updates. TD3 updates the policy (and target networks) less frequently than the Q-function.
+        c) Target Policy Smoothing. TD3 adds noise to the target action, to make it harder for the policy to exploit Q-function errors by smoothing out Q along changes in action.
     
 #### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2),  [PPO](https://arxiv.org/pdf/1707.06347.pdf), [SAC](https://arxiv.org/pdf/1812.05905.pdf)
     Policy gradient method
