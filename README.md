@@ -73,7 +73,7 @@
         c) Target Policy Smoothing. TD3 adds noise to the target action, to make it harder for the policy to exploit Q-function errors by smoothing out Q along changes in action.
     
 #### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2),  [PPO](https://arxiv.org/pdf/1707.06347.pdf), [SAC](https://arxiv.org/pdf/1812.05905.pdf)
-   ![Network](/pics/a3c.png=250x)
+   ![Network](/pics/a3c.png =250px)
      
     * Policy gradient method.
     * To make PG baseline state-dependent, use Q(s,a) = V(s) + A(s,a). We can use V(s) as baseline and subtract from Q(s,a).
