@@ -60,6 +60,7 @@
         c) L = -Q(s,a)log(pi(a|s)) => dL = -Q(s,a)dlog(pi(a|s))
         d) No replay buffer (on-policy), no target network. In Q-learning, use replay buffer, use target network to break corrrelation in Q-values approximation.
         e) Use baselines to reduce variance and increase stability.
+        f) To make baseline state-dependent, use Q(s,a) = V(s) + A(s,a), see Actor-Critic.
     * 4.2 Deep Deterministic Policy Gradient (DDPG), see 5.5
         a) DDPG is an off-policy algorithm, which is used for environments with continuous action spaces.
         b) Concurrently learn a Q-function and a policy, which can be thought of deep Q-learning for continuous action spaces.
@@ -114,6 +115,6 @@
     * 8.4 Fully parameterized Quantile Function (FQF)
     
 #### Installation
-    Install full gym (and mujuco).
-    Please refer to this detailed article
+    Install pytorch 1.0+ and gym env.
+    Optional, install mujuco
     https://lutein.github.io/2018/03/03/RL-install-md/
