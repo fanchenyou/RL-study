@@ -73,12 +73,15 @@
         c) Target Policy Smoothing. TD3 adds noise to the target action, to make it harder for the policy to exploit Q-function errors by smoothing out Q along changes in action.
     
 #### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2),  [PPO](https://arxiv.org/pdf/1707.06347.pdf), [SAC](https://arxiv.org/pdf/1812.05905.pdf)
-    Policy gradient method
+   ![Network](/pics/a3c.png)
+     
+    * Policy gradient method.
+    * To make PG baseline state-dependent, use Q(s,a) = V(s) + A(s,a). We can use V(s) as baseline and subtract from Q(s,a).
+    * To estimate V(s), use another network to approximate V(s) as in DQN.
     * 5.1 A2C
-        a) Advantage Actor-Critic RL
-        b) Train Actor and Critic networks
-        c) Define worker function which has independent gym environment, and simulates CartPole
-        d) Creates multiple processes for workers to update networks
+        a) Train Policy network (Actor) to output policy pi, and Value network (Critic) to estimate state value
+        b) Define worker function which has independent gym environment, and simulates CartPole
+        c) Creates multiple processes for workers to update networks
     * 5.2 Continuous A3C
         Continuous Asynchronized Actor Critic
     * 5.3 Discrete A3C
