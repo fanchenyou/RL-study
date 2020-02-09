@@ -69,7 +69,7 @@ def finish_episode():
         R = r + args.gamma * R
         returns.insert(0, R)
     returns = torch.tensor(returns)
-    returns = (returns - returns.mean()) / (returns.std() + eps)
+    returns = (returns - returns.mean()) / (returns.std() + eps)   # subtract mean to reduce variance
     for log_prob, R in zip(policy.saved_log_probs, returns):
         policy_loss.append(-log_prob * R)
     optimizer.zero_grad()

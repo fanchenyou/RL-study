@@ -54,15 +54,19 @@
 #### 4. Policy Gradient, [DDPG](https://arxiv.org/pdf/1509.02971.pdf), [TD3](https://spinningup.openai.com/en/latest/algorithms/td3.html)
     * Previous methods select actions based on estimated action values.
     * Here we learn a parameterized policy that can select actions without consulting a value function.
-    * 4.1 Standard PG
-    * 4.2 REINFORCE
-    * 4.3 Deep Deterministic Policy Gradient (DDPG), see 5.5
+    * 4.1 REINFORCE
+        a) Play full episodes and store transitions and calculate discounted total rewards for all steps
+        b) Use SGD to update model params to increase prob of good actions and decrease prob of bad actions
+        c) L = -Q(s,a)log(pi(a|s)) => dL = -Q(s,a)dlog(pi(a|s))
+        d) No replay buffer (on-policy), no target network. In Q-learning, use replay buffer, use target network to break corrrelation in Q-values approximation.
+        e) Use baselines to reduce variance and increase stability.
+    * 4.2 Deep Deterministic Policy Gradient (DDPG), see 5.5
         a) DDPG is an off-policy algorithm, which is used for environments with continuous action spaces.
         b) Concurrently learn a Q-function and a policy, which can be thought of deep Q-learning for continuous action spaces.
         c) DDPG interleaves learning an approximator to Q(s,a) with learning an approximator to a(s).
         d) For Q-learning side, it minimizes MSE of target Q and pred Q.
         e) For policy gradient side, it learns a deterministic policy which gives the action that maximizes Q by gradient ascent.
-     * 4.4 Twin Delayed DDPG (TD3), see 5.6
+     * 4.3 Twin Delayed DDPG (TD3), see 5.6
          a) TD3 learns two Q-functions and uses the smaller of the two Q-values to form the targets in the Bellman error loss functions.
          b) Delayed Policy Updates. TD3 updates the policy (and target networks) less frequently than the Q-function.
          c) Target Policy Smoothing. TD3 adds noise to the target action, to make it harder for the policy to exploit Q-function errors by smoothing out Q along changes in action.
