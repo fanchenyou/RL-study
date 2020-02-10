@@ -58,7 +58,8 @@
         a) Play full episodes and store transitions and calculate discounted total rewards for all steps
         b) Use SGD to update model params to increase prob of good actions and decrease prob of bad actions
         c) L = -Q(s,a)log(pi(a|s)) => dL = -Q(s,a)dlog(pi(a|s))
-        d) No replay buffer (on-policy), no target network. In Q-learning, use replay buffer, use target network to break corrrelation in Q-values approximation.
+        d) No replay buffer (on-policy), no target network. In Q-learning, use replay buffer, use target network to 
+           break corrrelation in Q-values approximation.
         e) Use baselines to reduce variance and increase stability.
         f) To make baseline state-dependent, use Q(s,a) = V(s) + A(s,a), see Actor-Critic.
     * 4.2 Deep Deterministic Policy Gradient (DDPG), see 5.5
@@ -66,7 +67,8 @@
         b) Concurrently learn a Q-function and a policy, which can be thought of deep Q-learning for continuous action spaces.
         c) DDPG interleaves learning an approximator to Q(s,a) with learning an approximator to a(s).
         d) For Q-learning side, it minimizes MSE of target Q and pred Q.
-        e) For policy gradient side, it learns a deterministic policy which gives the action that maximizes Q by gradient ascent.
+        e) For policy gradient side, it learns a deterministic policy which gives the action that 
+           maximizes Q by gradient ascent.
      * 4.3 Twin Delayed DDPG (TD3), see 5.6
         a) TD3 learns two Q-functions and uses the smaller of the two Q-values to form the targets in the Bellman error loss functions.
         b) Delayed Policy Updates. TD3 updates the policy (and target networks) less frequently than the Q-function.
@@ -76,7 +78,8 @@
    ![Network](/pics/a3c.png)
      
     * Policy gradient method.
-    * To make PG baseline state-dependent, use Q(s,a) = V(s) + A(s,a). We can use V(s) as baseline and subtract from Q(s,a).
+    * To make PG baseline state-dependent, use Q(s,a) = V(s) + A(s,a). 
+      We can use V(s) as baseline and subtract from Q(s,a).
     * To estimate V(s), use another network to approximate V(s) as in DQN.
     * 5.1 A2C
         a) Train Policy network (Actor) to output policy pi, and Value network (Critic) to estimate state value
@@ -105,14 +108,18 @@
     * 8.1 C51
         a) Define distributional Bellman equation which approximates value distributions.
         b) Value distribution Z_pi is a mapping from state-action pairs to distributions over returns.
-        c) The distributional Bellman operator preserves multimodality in value distributions, which leads to more stable learning.
-        d) Perform a heuristic projection step, followed by the minimization of a KL divergence between projected Bellman update and prediction.
+        c) The distributional Bellman operator preserves multimodality in value distributions, 
+           which leads to more stable learning.
+        d) Perform a heuristic projection step, followed by the minimization of a KL divergence 
+           between projected Bellman update and prediction.
         e) Fail to propose a practical distributional algorithm that operates end-to-end on the Wasserstein metric.
     * 8.2 QR-DQN
         a) Distributional reinforcement Learning with quantile regression.
-        b) By using quantile regression (Koenker 2005), there exists an algorithm  which can perform distributional RL over the Wasserstein metric.
+        b) By using quantile regression (Koenker 2005), there exists an algorithm which can perform 
+           distributional RL over the Wasserstein metric.
         c) Assign fixed uniform probabilities to N adjustable locations.
-        d) Stochastically adjust the distributions’ locations so as to minimize the Wasserstein distance to a target distribution.
+        d) Stochastically adjust the distributions’ locations so as to minimize the Wasserstein distance to 
+           a target distribution.
     * 8.3 Implicit-Quantile-DQN (IQN)
         a) Implicit Quantile Networks for Distributional Reinforcement Learning
         b) Use continuous quantile estimation to predict state distribution
