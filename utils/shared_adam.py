@@ -3,7 +3,7 @@ Shared optimizer, the parameters in the optimizer will shared in the multiproces
 """
 
 import torch
-
+import math
 
 class SharedAdam(torch.optim.Adam):
     def __init__(self, params, lr=1e-3, betas=(0.9, 0.9), eps=1e-8,
@@ -60,8 +60,8 @@ class SharedAdam(torch.optim.Adam):
 
                 denom = exp_avg_sq.sqrt().add_(group['eps'])
 
-                bias_correction1 = 1 - beta1 ** state['step'].item()
-                bias_correction2 = 1 - beta2 ** state['step'].item()
+                bias_correction1 = 1 - beta1 ** state['step']
+                bias_correction2 = 1 - beta2 ** state['step']
                 step_size = group['lr'] * math.sqrt(
                     bias_correction2) / bias_correction1
 

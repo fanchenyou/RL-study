@@ -5,7 +5,6 @@ tutorial https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-me
 
 LunarLander-v2 env https://gym.openai.com/envs/LunarLander-v2/
 
-NOTE: there could be an error of rendering with Python 3.7.6+
 """
 
 import gym
@@ -76,8 +75,8 @@ def test(n_episodes=5, name='./save/a2c/LunarLander_TWO.pth'):
     policy = ActorCritic()
     policy.load_state_dict(torch.load(name))
 
-    render = False
-    save_gif = False
+    render = True #False
+    save_gif = True #False
 
     for i_episode in range(1, n_episodes + 1):
         state = env.reset()
