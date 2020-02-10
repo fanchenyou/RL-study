@@ -27,6 +27,7 @@ OK/
 logs/
 sync.sh
 misc
+img
 
 # For Hive
 TempStatsStore/
