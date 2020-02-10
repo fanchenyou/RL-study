@@ -24,7 +24,8 @@
     * MC learns episode-by-episode.
     * Use Importance Sampling to learn the sampling strategy.
     * MC needs to wait until the final reward before any state-action pair values can be updated.
-    * Once the final reward was received, the path taken to reach the final state would need to be traced back and each value updated accordingly.
+    * Once the final reward was received, the path taken to reach the final state would need to be traced back and 
+      each value updated accordingly.
 
 #### 2. Temporal Difference, [code](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/tree/master/chapter06), [tutorial](https://www.cse.unsw.edu.au/~cs9417ml/RL1/tdlearning.html)
     * Temporal Difference (TD) Learning is used to estimate value functions. 
@@ -37,7 +38,8 @@
     * TD(0) - learn state-value function v(s)
     # Sarsa(On-policy) - learn an action-value function q(a,s)
     # Q-learning(Off-policy) - learn action-value regardless of selected action
-    # Act-critic - critic is mearsuing V(s), actor is an independent policy. Use actor to choose action, and use TD to update critic. 
+    # Act-critic - critic is mearsuing V(s), actor is an independent policy. Use actor to choose action, and use TD 
+      to update critic. 
     
     
 #### 3. Q-learning, [Double-Q](https://arxiv.org/abs/1509.06461), [Dueling-Q](https://arxiv.org/abs/1511.06581)
@@ -64,15 +66,17 @@
         f) To make baseline state-dependent, use Q(s,a) = V(s) + A(s,a), see Actor-Critic.
     * 4.2 Deep Deterministic Policy Gradient (DDPG), see 5.5
         a) DDPG is an off-policy algorithm, which is used for environments with continuous action spaces.
-        b) Concurrently learn a Q-function and a policy, which can be thought of deep Q-learning for continuous action spaces.
+        b) Concurrently learn a Q-function and a policy for continuous action spaces.
         c) DDPG interleaves learning an approximator to Q(s,a) with learning an approximator to a(s).
         d) For Q-learning side, it minimizes MSE of target Q and pred Q.
         e) For policy gradient side, it learns a deterministic policy which gives the action that 
            maximizes Q by gradient ascent.
      * 4.3 Twin Delayed DDPG (TD3), see 5.6
-        a) TD3 learns two Q-functions and uses the smaller of the two Q-values to form the targets in the Bellman error loss functions.
+        a) TD3 learns two Q-functions and uses the smaller of the two Q-values to form the targets in the Bellman error 
+           loss functions.
         b) Delayed Policy Updates. TD3 updates the policy (and target networks) less frequently than the Q-function.
-        c) Target Policy Smoothing. TD3 adds noise to the target action, to make it harder for the policy to exploit Q-function errors by smoothing out Q along changes in action.
+        c) Target Policy Smoothing. TD3 adds noise to the target action, to make it harder for the policy to exploit 
+           Q-function errors by smoothing out Q along changes in action.
     
 #### 5. Actor-Critic, [A2C](https://www.freecodecamp.org/news/an-intro-to-advantage-actor-critic-methods-lets-play-sonic-the-hedgehog-86d6240171d/), [A3C](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-8-asynchronous-actor-critic-agents-a3c-c88f72a5e9f2),  [PPO](https://arxiv.org/pdf/1707.06347.pdf), [SAC](https://arxiv.org/pdf/1812.05905.pdf)
    ![Network](/pics/a3c.png)
